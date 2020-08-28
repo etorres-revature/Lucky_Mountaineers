@@ -26,11 +26,35 @@ const baseNYSETickerURL =
 const baseNASDAQTickerURL =
   "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NASDAQ&query=";
 const baseProfileURL =
-  "https://www.alphavantage.co/query?function=OVERVIEW&apikey=ee6dfd910b7c250ad88b85d3981e27a3&symbol=";
+  "https://www.alphavantage.co/query?function=OVERVIEW&apikey=FWDP2B8C75PGXARR&symbol=";
+const baseQuoteURL =
+  "https://www.alphavantage.co/query?apikey=FWDP2B8C75PGXARR&function=GLOBAL_QUOTE&symbol=";
+
 const baseChartURL =
-  "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=ee6dfd910b7c250ad88b85d3981e27a3&symbol=";
+  "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=FWDP2B8C75PGXARR&symbol=";
 
 let ticker = "";
+let companyName = "";
+let companyDescription = "";
+let exchange = "";
+let marketSector = "";
+let lastDividendDate = "";
+let ratioPE = 0;
+let price = 0;
+let changePercent = 0;
+let changeValue = 0;
+let _52WeekHigh = 0;
+let _52WeekLow = 0;
+let _200DayAvg = 0;
+let marketCap = 0;
+let lastDividendAmount = 0;
+let beta = 0;
+let dailyOpen = 0;
+let prevClose = 0;
+let dailyHigh = 0;
+let dailyLow = 0;
+let dailyVolume = 0;
+let lastTradingDay = "";
 
 function getNYSETickerSymbol(truck) {
   let searchNYSETickerURL = baseNYSETickerURL + truck;
@@ -41,6 +65,8 @@ function getNYSETickerSymbol(truck) {
     method: "GET",
   }).then(function (nyseTickerData) {
     console.log(nyseTickerData);
+    ticker = nyseTickerData[0].symbol;
+    console.log(ticker);
   });
 }
 
@@ -53,6 +79,8 @@ function getNASDAQTickerSymbol(truck) {
     method: "GET",
   }).then(function (nasdaqTickerData) {
     console.log(nasdaqTickerData);
+    ticker = nasdaqTickerData[0].symbol;
+    console.log(ticker);
   });
 }
 
@@ -65,6 +93,60 @@ function getProfile(car) {
     method: "GET",
   }).then(function (profileData) {
     console.log(profileData);
+    companyName = profileData.Name;
+    console.log(companyName, "is the company");
+    companyDescription = profileData.Description;
+    console.log("this is the description", companyDescription);
+    exchange = profileData.Exchange;
+    console.log("traded on ", exchange);
+    marketSector = profileData.Sector;
+    console.log("market sector =", marketSector);
+    ratioPE = profileData.PERatio;
+    console.log("Profits/Earnings ratio = ", ratioPE);
+    marketCap = profileData.MarketCapitalization;
+    console.log("Market Cap is ", marketCap);
+    lastDividendAmount = profileData.DividendPerShare;
+    console.log("amount of last dividend", lastDividendAmount);
+    lastDividendDate = profileData.DividendDate;
+    console.log("last divdend on", lastDividendDate);
+    beta = profileData.Beta;
+    console.log(companyName + " beta", beta);
+    _200DayAvg = profileData["200DayMovingAverage"];
+    console.log("200 day average", _200DayAvg);
+    _52WeekLow = profileData["52WeekLow"];
+    console.log("52 week low: " + _52WeekLow);
+    _52WeekHigh = profileData["52WeekHigh"];
+    console.log("52 week high: " + _52WeekHigh);
+  });
+}
+
+function getQuote(hybrid) {
+  let searchQuoteURL = baseQuoteURL + hybrid;
+  console.log("this is the URL to search for quote", searchQuoteURL);
+
+  $.ajax({
+    url: searchQuoteURL,
+    method: "GET",
+  }).then(function (quoteData) {
+    console.log(quoteData);
+    price = quoteData["Global Quote"]["05. price"];
+    console.log("Price is " + price);
+    changePercent = quoteData["Global Quote"]["10. change percent"];
+    console.log("change percent", changePercent);
+    changeValue = quoteData["Global Quote"]["09. change"];
+    console.log("absolute change", changeValue);
+    dailyOpen = quoteData["Global Quote"]["02. open"];
+    console.log("daily trading open " + dailyOpen);
+    prevClose = quoteData["Global Quote"]["08. previous close"];
+    console.log("previous trading close");
+    dailyHigh = quoteData["Global Quote"]["03. high"];
+    console.log("daily trading high", dailyHigh);
+    dailyLow = quoteData["Global Quote"]["04. low"];
+    console.log("daily trading low", dailyLow);
+    dailyVolume = quoteData["Global Quote"]["06. volume"];
+    console.log("volume for day" + dailyVolume);
+    lastTradingDay = quoteData["Global Quote"]["07. latest trading day"];
+    console.log("last trading day", lastTradingDay);
   });
 }
 
@@ -98,5 +180,6 @@ $("#stock-profile-searchBtn").on("click", function () {
   ticker = $("#stock-profile-input").val().trim();
   ticker - ticker.split(" ").join("_");
   getProfile(ticker);
+  getQuote(ticker);
   getChartInfo(ticker);
 });
