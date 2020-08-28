@@ -21,8 +21,10 @@
 //financialmodelingprep.com API key
 //ee6dfd910b7c250ad88b85d3981e27a3
 
-const baseTickerURL =
+const baseNYSETickerURL =
   "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
+const baseNASDAQTickerURL =
+  "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NASDAQ&query=";
 const baseProfileURL =
   "https://www.alphavantage.co/query?function=OVERVIEW&apikey=ee6dfd910b7c250ad88b85d3981e27a3&symbol=";
 const baseChartURL =
@@ -30,15 +32,27 @@ const baseChartURL =
 
 let ticker = "";
 
-function getTickerSymbol(truck) {
-  let searchTickerURL = baseTickerURL + truck;
-  console.log("this is the ULR to search for ticker", searchTickerURL);
+function getNYSETickerSymbol(truck) {
+  let searchNYSETickerURL = baseNYSETickerURL + truck;
+  console.log("this is the URL to search for ticker", searchNYSETickerURL);
 
   $.ajax({
-    url: searchTickerURL,
+    url: searchNYSETickerURL,
     method: "GET",
-  }).then(function (tickerData) {
-    console.log(tickerData);
+  }).then(function (nyseTickerData) {
+    console.log(nyseTickerData);
+  });
+}
+
+function getNASDAQTickerSymbol(truck) {
+  let searchNASDAQTickerURL = baseNASDAQTickerURL + truck;
+  console.log("this is the URL to search for ticker", searchNASDAQTickerURL);
+
+  $.ajax({
+    url: searchNASDAQTickerURL,
+    method: "GET",
+  }).then(function (nasdaqTickerData) {
+    console.log(nasdaqTickerData);
   });
 }
 
@@ -65,11 +79,18 @@ function getChartInfo(miniVan) {
   });
 }
 
-$("#ticker-searchBtn").on("click", function () {
+$("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
-  ticker = $("#ticker-input").val().trim();
+  ticker = $("#nyse-ticker-input").val().trim();
   ticker = ticker.split(" ").join("_");
-  getTickerSymbol(ticker);
+  getNYSETickerSymbol(ticker);
+});
+
+$("#nasdaq-ticker-searchBtn").on("click", function () {
+  event.preventDefault();
+  ticker = $("#nasdaq-ticker-input").val().trim();
+  ticker = ticker.split(" ").join("_");
+  getNASDAQTickerSymbol(ticker);
 });
 
 $("#stock-profile-searchBtn").on("click", function () {
