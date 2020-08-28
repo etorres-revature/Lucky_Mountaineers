@@ -21,29 +21,61 @@
 //financialmodelingprep.com API key
 //ee6dfd910b7c250ad88b85d3981e27a3
 
-const baseTickerURL = "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query="
+const baseTickerURL =
+  "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
+const baseProfileURL =
+  "https://www.alphavantage.co/query?function=OVERVIEW&apikey=ee6dfd910b7c250ad88b85d3981e27a3&symbol=";
+const baseChartURL =
+  "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=ee6dfd910b7c250ad88b85d3981e27a3&symbol=";
+
 let ticker = "";
 
 function getTickerSymbol(truck) {
-    let searchTickerURL = baseTickerURL + truck;
-    console.log("this is the ULR to search for ticker", searchTickerURL);
+  let searchTickerURL = baseTickerURL + truck;
+  console.log("this is the ULR to search for ticker", searchTickerURL);
 
-    $.ajax({
-        url: searchTickerURL,
-        method:  "GET"
-    }).then(function(tickerData) {
-        console.log(tickerData);
-    });
+  $.ajax({
+    url: searchTickerURL,
+    method: "GET",
+  }).then(function (tickerData) {
+    console.log(tickerData);
+  });
 }
 
+function getProfile(car) {
+  let searchProfileURL = baseProfileURL + car;
+  console.log("this is the URL to search for profile", searchProfileURL);
 
+  $.ajax({
+    url: searchProfileURL,
+    method: "GET",
+  }).then(function (profileData) {
+    console.log(profileData);
+  });
+}
 
+function getChartInfo(miniVan) {
+  let searchChartURL = baseChartURL + miniVan;
 
+  $.ajax({
+    url: searchChartURL,
+    method: "GET",
+  }).then(function (chartData) {
+    console.log(chartData);
+  });
+}
 
+$("#ticker-searchBtn").on("click", function () {
+  event.preventDefault();
+  ticker = $("#ticker-input").val().trim();
+  ticker = ticker.split(" ").join("_");
+  getTickerSymbol(ticker);
+});
 
-$("#ticker-searchBtn").on("click", function(){
-event.preventDefault()
-ticker = $("#ticker-input").val().trim()
-ticker = ticker.split(" ").join("_")
-getTickerSymbol(ticker);
-})
+$("#stock-profile-searchBtn").on("click", function () {
+  event.preventDefault();
+  ticker = $("#stock-profile-input").val().trim();
+  ticker - ticker.split(" ").join("_");
+  getProfile(ticker);
+  getChartInfo(ticker);
+});
