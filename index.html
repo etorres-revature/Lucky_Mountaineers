@@ -3,14 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beer and Tacos</title>
+    <title>Financial News you can use</title>
+    <!-- Compressed CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-    <h1>BEER AND TACOS!!</h1>
+    <h1>Stock Quotes</h1>
 </header>
+
+<label for="nyse-ticker">Enter a company to find ticker symbol (NYSE only):
+    <input id ="nyse-ticker-input" type="text" name="nyse-ticker" placeholder="Enter a company name traded on NYSE..."/>
+    <button id="nyse-ticker-searchBtn" type="button" class="success button">Search</button>
+</label>
+
+<label for="nasdaq-ticker">Enter a company to find ticker symbol (NASDAQ only):
+    <input id ="nasdaq-ticker-input" type="text" name="nasdaq-ticker" placeholder="Enter a company name traded on NASDAQ..."/>
+    <button id="nasdaq-ticker-searchBtn" type="button" class="success button">Search</button>
+</label>
+
+<label for="ticker">Enter a stock for company profile:
+    <input id ="stock-profile-input" type="text" name="stock-profile" placeholder="Enter a stock symbol..."/>
+    <button id="stock-profile-searchBtn" type="button" class="success button">Search</button>
+</label>
+
+
+<script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
     <script src="app.js"></script>
 </body>
 </html>
