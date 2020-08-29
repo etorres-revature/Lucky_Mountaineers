@@ -56,6 +56,58 @@ let dailyLow = 0;
 let dailyVolume = 0;
 let lastTradingDay = "";
 
+let placeholderData = {
+  labels: [
+    "2019-09-30",
+    "2019-10-31",
+    "2019-11-29",
+    "2020-12-31",
+    "2020-01-31",
+    "2020-02-28",
+    "2020-03-31",
+    "2020-04-30",
+    "2020-05-29",
+    "2020-06-30",
+    "2020-07-31",
+    "2020-08-28",
+  ],
+  datasets: [
+    {
+      label: "",
+      backgroundColor: "rgb(255, 99, 132)",
+      borderColor: "rgb(255, 99, 132)",
+      data: [
+        "54.0100",
+        "56.1300",
+        "56.6400",
+        "53.9800",
+        "54.9800",
+        "46.1900",
+        "35.6100",
+        "31.2500",
+        "32.1000",
+        "34.1800",
+        "30.8900",
+        "38.8100",
+      ],
+    },
+  ],
+};
+
+var ctx = document.getElementById("myChart").getContext("2d");
+
+var chart = new Chart(ctx, {
+  // The type of chart we want to create
+  type: "line",
+
+  // The data for our dataset
+  data: placeholderData,
+
+  // Configuration options go here
+  options: {},
+});
+
+
 function getNYSETickerSymbol(truck) {
   let searchNYSETickerURL = baseNYSETickerURL + truck;
   console.log("this is the URL to search for ticker", searchNYSETickerURL);
@@ -158,57 +210,43 @@ function getChartInfo(miniVan) {
     method: "GET",
   }).then(function (chartData) {
     console.log(chartData);
+    let timeSeries = chartData["Monthly Time Series"];
+    console.log("timeSeries", timeSeries);
+    let result = [];
+    for (var i in timeSeries) {
+      result.push([i, timeSeries[i]["4. close"]]);
+    }
+    var newResult = result.slice(0, 12);
+    console.log("result", newResult);
+
+
+    let labels = [];
+    let dataset = [];
+    for (var i = 0; i < newResult.length; i++) {
+      let chartDate = newResult[i][0];
+      let chartPrice = newResult[i][1];
+      console.log(chartDate);
+      console.log(chartPrice);
+      labels.unshift(chartDate);
+      dataset.unshift(chartPrice);
+    }
+    setChartData(chart, labels, dataset);
   });
 }
 
-var ctx = document.getElementById("myChart").getContext("2d");
+function setChartData(chart, labels, dataset) {
+  chart.data.labels = labels;
+  chart.data.datasets[0].data = dataset;
+  chart.update();
+}
 
-var chart = new Chart(ctx, {
-  // The type of chart we want to create
-  type: "line",
-
-  // The data for our dataset
-  data: {
-    labels: [
-      "2019-09-30",
-      "2019-10-31",
-      "2019-11-29",
-      "2020-12-31",
-      "2020-01-31",
-      "2020-02-28",
-      "2020-03-31",
-      "2020-04-30",
-      "2020-05-29",
-      "2020-06-30",
-      "2020-07-31",
-      "2020-08-28",
-    ],
-    datasets: [
-      {
-        label: "luv",
-        backgroundColor: "rgb(255, 99, 132)",
-        borderColor: "rgb(255, 99, 132)",
-        data: [
-          "54.0100",
-          "56.1300",
-          "56.6400",
-          "53.9800",
-          "54.9800",
-          "46.1900",
-          "35.6100",
-          "31.2500",
-          "32.1000",
-          "34.1800",
-          "30.8900",
-          "38.8100",
-        ],
-      },
-    ],
-  },
-
-  // Configuration options go here
-  options: {},
-});
+function clearChartData(chart) {
+  chart.data.labels = [];
+  chart.data.datasets.forEach(function (dataset) {
+    dataset.data = [];
+  });
+  chart.update();
+}
 
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
