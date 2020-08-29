@@ -21,6 +21,9 @@
 //financialmodelingprep.com API key
 //ee6dfd910b7c250ad88b85d3981e27a3
 
+//intrinio API key
+//OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1
+
 const baseNYSETickerURL =
   "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
 const baseNASDAQTickerURL =
@@ -29,9 +32,9 @@ const baseProfileURL =
   "https://www.alphavantage.co/query?function=OVERVIEW&apikey=FWDP2B8C75PGXARR&symbol=";
 const baseQuoteURL =
   "https://www.alphavantage.co/query?apikey=FWDP2B8C75PGXARR&function=GLOBAL_QUOTE&symbol=";
-
 const baseChartURL =
   "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=FWDP2B8C75PGXARR&symbol=";
+const baseNewsURL = "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
 
 let ticker = "";
 let companyName = "";
@@ -106,7 +109,6 @@ var chart = new Chart(ctx, {
   // Configuration options go here
   options: {},
 });
-
 
 function getNYSETickerSymbol(truck) {
   let searchNYSETickerURL = baseNYSETickerURL + truck;
@@ -218,7 +220,6 @@ function getChartInfo(miniVan) {
     }
     var newResult = result.slice(0, 12);
     console.log("result", newResult);
-
 
     let labels = [];
     let dataset = [];
