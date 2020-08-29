@@ -161,6 +161,55 @@ function getChartInfo(miniVan) {
   });
 }
 
+var ctx = document.getElementById("myChart").getContext("2d");
+
+var chart = new Chart(ctx, {
+  // The type of chart we want to create
+  type: "line",
+
+  // The data for our dataset
+  data: {
+    labels: [
+      "2019-09-30",
+      "2019-10-31",
+      "2019-11-29",
+      "2020-12-31",
+      "2020-01-31",
+      "2020-02-28",
+      "2020-03-31",
+      "2020-04-30",
+      "2020-05-29",
+      "2020-06-30",
+      "2020-07-31",
+      "2020-08-28",
+    ],
+    datasets: [
+      {
+        label: "luv",
+        backgroundColor: "rgb(255, 99, 132)",
+        borderColor: "rgb(255, 99, 132)",
+        data: [
+          "54.0100",
+          "56.1300",
+          "56.6400",
+          "53.9800",
+          "54.9800",
+          "46.1900",
+          "35.6100",
+          "31.2500",
+          "32.1000",
+          "34.1800",
+          "30.8900",
+          "38.8100",
+        ],
+      },
+    ],
+  },
+
+  // Configuration options go here
+  options: {},
+});
+
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nyse-ticker-input").val().trim();
