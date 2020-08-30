@@ -1,4 +1,4 @@
-div.grid-container {
+div#chart {
     border: 1px solid darkslategray;
     height: 375px;
     width: 750px;

@@ -34,7 +34,8 @@ const baseQuoteURL =
   "https://www.alphavantage.co/query?apikey=FWDP2B8C75PGXARR&function=GLOBAL_QUOTE&symbol=";
 const baseChartURL =
   "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=FWDP2B8C75PGXARR&symbol=";
-const baseNewsURL = "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
+const baseNewsURL =
+  "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
 
 let ticker = "";
 let companyName = "";
@@ -249,6 +250,31 @@ function clearChartData(chart) {
   chart.update();
 }
 
+function getStockNews() {
+  $.ajax({
+    url: baseNewsURL,
+    method: "GET",
+  }).then(function (newsData) {
+    console.log(newsData);
+    let divStockNews = $("#stock-news");
+    divStockNews.append("<hr>");
+    for(var i = 0; i < newsData.news.length; i++) {
+      let publicationDate = newsData.news[i].publication_date;
+      console.log(publicationDate);
+      let publicationDate1 = publicationDate.slice(0, 10);
+      let newPublicationDate = publicationDate1 + ": " 
+      let publicationTitle = newsData.news[i].title;
+      console.log(publicationTitle);
+      let publicationURL = newsData.news[i].url;
+      console.log(publicationURL);
+      divStockNews.append("<p id=publication-date>"+newPublicationDate+"</p>");
+      divStockNews.append("<p id=pubication-title>"+ publicationTitle +"</p>");
+      divStockNews.append("<a id=publication-URL href="+publicationURL+">"+publicationURL+"</a>");
+    divStockNews.append("<hr>")
+    }
+  });
+}
+
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nyse-ticker-input").val().trim();
@@ -270,4 +296,5 @@ $("#stock-profile-searchBtn").on("click", function () {
   getProfile(ticker);
   getQuote(ticker);
   getChartInfo(ticker);
+  getStockNews();
 });
