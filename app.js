@@ -21,6 +21,9 @@
 //financialmodelingprep.com API key
 //ee6dfd910b7c250ad88b85d3981e27a3
 
+//intrinio API key
+//OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1
+
 const baseNYSETickerURL =
   "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
 const baseNASDAQTickerURL =
@@ -29,9 +32,10 @@ const baseProfileURL =
   "https://www.alphavantage.co/query?function=OVERVIEW&apikey=FWDP2B8C75PGXARR&symbol=";
 const baseQuoteURL =
   "https://www.alphavantage.co/query?apikey=FWDP2B8C75PGXARR&function=GLOBAL_QUOTE&symbol=";
-
 const baseChartURL =
   "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=FWDP2B8C75PGXARR&symbol=";
+const baseNewsURL =
+  "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
 
 let ticker = "";
 let companyName = "";
@@ -106,7 +110,6 @@ var chart = new Chart(ctx, {
   // Configuration options go here
   options: {},
 });
-
 
 function getNYSETickerSymbol(truck) {
   let searchNYSETickerURL = baseNYSETickerURL + truck;
@@ -219,7 +222,6 @@ function getChartInfo(miniVan) {
     var newResult = result.slice(0, 12);
     console.log("result", newResult);
 
-
     let labels = [];
     let dataset = [];
     for (var i = 0; i < newResult.length; i++) {
@@ -248,6 +250,31 @@ function clearChartData(chart) {
   chart.update();
 }
 
+function getStockNews() {
+  $.ajax({
+    url: baseNewsURL,
+    method: "GET",
+  }).then(function (newsData) {
+    console.log(newsData);
+    let divStockNews = $("#stock-news");
+    divStockNews.append("<hr>");
+    for(var i = 0; i < newsData.news.length; i++) {
+      let publicationDate = newsData.news[i].publication_date;
+      console.log(publicationDate);
+      let publicationDate1 = publicationDate.slice(0, 10);
+      let newPublicationDate = publicationDate1 + ": " 
+      let publicationTitle = newsData.news[i].title;
+      console.log(publicationTitle);
+      let publicationURL = newsData.news[i].url;
+      console.log(publicationURL);
+      divStockNews.append("<p id=publication-date>"+newPublicationDate+"</p>");
+      divStockNews.append("<p id=pubication-title>"+ publicationTitle +"</p>");
+      divStockNews.append("<a id=publication-URL href="+publicationURL+">"+publicationURL+"</a>");
+    divStockNews.append("<hr>")
+    }
+  });
+}
+
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nyse-ticker-input").val().trim();
@@ -269,4 +296,5 @@ $("#stock-profile-searchBtn").on("click", function () {
   getProfile(ticker);
   getQuote(ticker);
   getChartInfo(ticker);
+  getStockNews();
 });
