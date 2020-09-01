@@ -21,6 +21,8 @@
 //financialmodelingprep.com API key
 //ee6dfd910b7c250ad88b85d3981e27a3
 
+
+//API Query URLs
 const baseNYSETickerURL =
   "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
 const baseNASDAQTickerURL =
@@ -33,22 +35,27 @@ const baseQuoteURL =
 const baseChartURL =
   "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=FWDP2B8C75PGXARR&symbol=";
 
+
 let ticker = "";
+
+//global variable for getProfile AJAX call
 let companyName = "";
 let companyDescription = "";
 let exchange = "";
 let marketSector = "";
-let lastDividendDate = "";
 let ratioPE = 0;
+let marketCap = 0;
+let lastDividendAmount = 0;
+let lastDividendDate = "";
+let beta = 0;
+let _200DayAvg = 0;
+let _52WeekLow = 0;
+let _52WeekHigh = 0;
+
+//global variable for getQuote AJAX call
 let price = 0;
 let changePercent = 0;
 let changeValue = 0;
-let _52WeekHigh = 0;
-let _52WeekLow = 0;
-let _200DayAvg = 0;
-let marketCap = 0;
-let lastDividendAmount = 0;
-let beta = 0;
 let dailyOpen = 0;
 let prevClose = 0;
 let dailyHigh = 0;
@@ -56,6 +63,7 @@ let dailyLow = 0;
 let dailyVolume = 0;
 let lastTradingDay = "";
 
+//get NYSE function
 function getNYSETickerSymbol(truck) {
   let searchNYSETickerURL = baseNYSETickerURL + truck;
   console.log("this is the URL to search for ticker", searchNYSETickerURL);
@@ -70,6 +78,7 @@ function getNYSETickerSymbol(truck) {
   });
 }
 
+//get NASDAQ function
 function getNASDAQTickerSymbol(truck) {
   let searchNASDAQTickerURL = baseNASDAQTickerURL + truck;
   console.log("this is the URL to search for ticker", searchNASDAQTickerURL);
@@ -84,6 +93,7 @@ function getNASDAQTickerSymbol(truck) {
   });
 }
 
+//get company profile function
 function getProfile(car) {
   let searchProfileURL = baseProfileURL + car;
   console.log("this is the URL to search for profile", searchProfileURL);
@@ -120,6 +130,7 @@ function getProfile(car) {
   });
 }
 
+//get quote function
 function getQuote(hybrid) {
   let searchQuoteURL = baseQuoteURL + hybrid;
   console.log("this is the URL to search for quote", searchQuoteURL);
@@ -150,6 +161,7 @@ function getQuote(hybrid) {
   });
 }
 
+//get chart info function
 function getChartInfo(miniVan) {
   let searchChartURL = baseChartURL + miniVan;
 
@@ -161,6 +173,7 @@ function getChartInfo(miniVan) {
   });
 }
 
+//NYSE click event 
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nyse-ticker-input").val().trim();
@@ -168,6 +181,7 @@ $("#nyse-ticker-searchBtn").on("click", function () {
   getNYSETickerSymbol(ticker);
 });
 
+//NASDAQ click event
 $("#nasdaq-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nasdaq-ticker-input").val().trim();
@@ -175,6 +189,7 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
   getNASDAQTickerSymbol(ticker);
 });
 
+//company search click event
 $("#stock-profile-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#stock-profile-input").val().trim();
