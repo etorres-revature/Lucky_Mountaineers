@@ -1,0 +1,26 @@
+<<<<<<< Updated upstream
+=======
+div#chart {
+    border: 1px solid darkslategray;
+    height: 375px;
+    width: 100%;
+}
+
+div.spacer {
+    height: 125px;
+}
+
+button {
+    display: inline-block;
+}
+
+input {
+    display: inline-block;
+}
+
+.stock-info {
+    display: inline;
+    width: 50%;
+    height: 100%;
+}
+>>>>>>> Stashed changes
