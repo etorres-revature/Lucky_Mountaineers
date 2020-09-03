@@ -23,6 +23,7 @@
 
 
 //API Query URLs
+
 const baseNYSETickerURL =
   "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
 const baseNASDAQTickerURL =
@@ -63,7 +64,7 @@ let dailyLow = 0;
 let dailyVolume = 0;
 let lastTradingDay = "";
 
-//get NYSE function
+//get NYSE function 
 function getNYSETickerSymbol(truck) {
   let searchNYSETickerURL = baseNYSETickerURL + truck;
   console.log("this is the URL to search for ticker", searchNYSETickerURL);
@@ -127,6 +128,10 @@ function getProfile(car) {
     console.log("52 week low: " + _52WeekLow);
     _52WeekHigh = profileData["52WeekHigh"];
     console.log("52 week high: " + _52WeekHigh);
+    let company = $("")
+    $("#test").text(companyName)
+    $("#test").text(companyDescription)
+
   });
 }
 
