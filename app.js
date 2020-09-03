@@ -21,8 +21,8 @@
 //financialmodelingprep.com API key
 //ee6dfd910b7c250ad88b85d3981e27a3
 
-//intrinio API key
-//OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1
+
+//API Query URLs
 
 const baseNYSETickerURL =
   "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
@@ -32,27 +32,31 @@ const baseProfileURL =
   "https://www.alphavantage.co/query?function=OVERVIEW&apikey=FWDP2B8C75PGXARR&symbol=";
 const baseQuoteURL =
   "https://www.alphavantage.co/query?apikey=FWDP2B8C75PGXARR&function=GLOBAL_QUOTE&symbol=";
+
 const baseChartURL =
   "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=FWDP2B8C75PGXARR&symbol=";
-const baseNewsURL =
-  "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
+
 
 let ticker = "";
+
+//global variable for getProfile AJAX call
 let companyName = "";
 let companyDescription = "";
 let exchange = "";
 let marketSector = "";
-let lastDividendDate = "";
 let ratioPE = 0;
+let marketCap = 0;
+let lastDividendAmount = 0;
+let lastDividendDate = "";
+let beta = 0;
+let _200DayAvg = 0;
+let _52WeekLow = 0;
+let _52WeekHigh = 0;
+
+//global variable for getQuote AJAX call
 let price = 0;
 let changePercent = 0;
 let changeValue = 0;
-let _52WeekHigh = 0;
-let _52WeekLow = 0;
-let _200DayAvg = 0;
-let marketCap = 0;
-let lastDividendAmount = 0;
-let beta = 0;
 let dailyOpen = 0;
 let prevClose = 0;
 let dailyHigh = 0;
@@ -60,57 +64,7 @@ let dailyLow = 0;
 let dailyVolume = 0;
 let lastTradingDay = "";
 
-let placeholderData = {
-  labels: [
-    "2019-09-30",
-    "2019-10-31",
-    "2019-11-29",
-    "2020-12-31",
-    "2020-01-31",
-    "2020-02-28",
-    "2020-03-31",
-    "2020-04-30",
-    "2020-05-29",
-    "2020-06-30",
-    "2020-07-31",
-    "2020-08-28",
-  ],
-  datasets: [
-    {
-      label: "",
-      backgroundColor: "rgb(255, 99, 132)",
-      borderColor: "rgb(255, 99, 132)",
-      data: [
-        "54.0100",
-        "56.1300",
-        "56.6400",
-        "53.9800",
-        "54.9800",
-        "46.1900",
-        "35.6100",
-        "31.2500",
-        "32.1000",
-        "34.1800",
-        "30.8900",
-        "38.8100",
-      ],
-    },
-  ],
-};
-
-var ctx = document.getElementById("myChart").getContext("2d");
-
-var chart = new Chart(ctx, {
-  // The type of chart we want to create
-  type: "line",
-
-  // The data for our dataset
-  data: placeholderData,
-
-  // Configuration options go here
-  options: {},
-});
-
+//get NYSE function 
 function getNYSETickerSymbol(truck) {
   let searchNYSETickerURL = baseNYSETickerURL + truck;
   console.log("this is the URL to search for ticker", searchNYSETickerURL);
@@ -125,6 +79,7 @@ function getNYSETickerSymbol(truck) {
   });
 }
 
+//get NASDAQ function
 function getNASDAQTickerSymbol(truck) {
   let searchNASDAQTickerURL = baseNASDAQTickerURL + truck;
   console.log("this is the URL to search for ticker", searchNASDAQTickerURL);
@@ -139,6 +94,7 @@ function getNASDAQTickerSymbol(truck) {
   });
 }
 
+//get company profile function
 function getProfile(car) {
   let searchProfileURL = baseProfileURL + car;
   console.log("this is the URL to search for profile", searchProfileURL);
@@ -172,9 +128,14 @@ function getProfile(car) {
     console.log("52 week low: " + _52WeekLow);
     _52WeekHigh = profileData["52WeekHigh"];
     console.log("52 week high: " + _52WeekHigh);
+    let company = $("<div>")
+    company.append("<p>",companyName)
+    company.append("<p>",companyDescription)
+$("#test").text(company)
   });
 }
 
+//get quote function
 function getQuote(hybrid) {
   let searchQuoteURL = baseQuoteURL + hybrid;
   console.log("this is the URL to search for quote", searchQuoteURL);
@@ -205,6 +166,7 @@ function getQuote(hybrid) {
   });
 }
 
+//get chart info function
 function getChartInfo(miniVan) {
   let searchChartURL = baseChartURL + miniVan;
 
@@ -213,68 +175,10 @@ function getChartInfo(miniVan) {
     method: "GET",
   }).then(function (chartData) {
     console.log(chartData);
-    let timeSeries = chartData["Monthly Time Series"];
-    console.log("timeSeries", timeSeries);
-    let result = [];
-    for (var i in timeSeries) {
-      result.push([i, timeSeries[i]["4. close"]]);
-    }
-    var newResult = result.slice(0, 12);
-    console.log("result", newResult);
-
-    let labels = [];
-    let dataset = [];
-    for (var i = 0; i < newResult.length; i++) {
-      let chartDate = newResult[i][0];
-      let chartPrice = newResult[i][1];
-      console.log(chartDate);
-      console.log(chartPrice);
-      labels.unshift(chartDate);
-      dataset.unshift(chartPrice);
-    }
-    setChartData(chart, labels, dataset);
   });
 }
 
-function setChartData(chart, labels, dataset) {
-  chart.data.labels = labels;
-  chart.data.datasets[0].data = dataset;
-  chart.update();
-}
-
-function clearChartData(chart) {
-  chart.data.labels = [];
-  chart.data.datasets.forEach(function (dataset) {
-    dataset.data = [];
-  });
-  chart.update();
-}
-
-function getStockNews() {
-  $.ajax({
-    url: baseNewsURL,
-    method: "GET",
-  }).then(function (newsData) {
-    console.log(newsData);
-    let divStockNews = $("#stock-news");
-    divStockNews.append("<hr>");
-    for(var i = 0; i < newsData.news.length; i++) {
-      let publicationDate = newsData.news[i].publication_date;
-      console.log(publicationDate);
-      let publicationDate1 = publicationDate.slice(0, 10);
-      let newPublicationDate = publicationDate1 + ": " 
-      let publicationTitle = newsData.news[i].title;
-      console.log(publicationTitle);
-      let publicationURL = newsData.news[i].url;
-      console.log(publicationURL);
-      divStockNews.append("<p id=publication-date>"+newPublicationDate+"</p>");
-      divStockNews.append("<p id=pubication-title>"+ publicationTitle +"</p>");
-      divStockNews.append("<a id=publication-URL href="+publicationURL+">"+publicationURL+"</a>");
-    divStockNews.append("<hr>")
-    }
-  });
-}
-
+//NYSE click event 
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nyse-ticker-input").val().trim();
@@ -282,6 +186,7 @@ $("#nyse-ticker-searchBtn").on("click", function () {
   getNYSETickerSymbol(ticker);
 });
 
+//NASDAQ click event
 $("#nasdaq-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nasdaq-ticker-input").val().trim();
@@ -289,6 +194,7 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
   getNASDAQTickerSymbol(ticker);
 });
 
+//company search click event
 $("#stock-profile-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#stock-profile-input").val().trim();
@@ -296,5 +202,4 @@ $("#stock-profile-searchBtn").on("click", function () {
   getProfile(ticker);
   getQuote(ticker);
   getChartInfo(ticker);
-  getStockNews();
 });
