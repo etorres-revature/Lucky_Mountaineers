@@ -24,6 +24,8 @@
 //intrinio API key
 //OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1
 
+//API Query URLs
+
 const baseNYSETickerURL =
   "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
 const baseNASDAQTickerURL =
@@ -37,22 +39,27 @@ const baseChartURL =
 const baseNewsURL =
   "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
 
+
 let ticker = "";
+
+//global variable for getProfile AJAX call
 let companyName = "";
 let companyDescription = "";
 let exchange = "";
 let marketSector = "";
-let lastDividendDate = "";
 let ratioPE = 0;
+let marketCap = 0;
+let lastDividendAmount = 0;
+let lastDividendDate = "";
+let beta = 0;
+let _200DayAvg = 0;
+let _52WeekLow = 0;
+let _52WeekHigh = 0;
+
+//global variable for getQuote AJAX call
 let price = 0;
 let changePercent = 0;
 let changeValue = 0;
-let _52WeekHigh = 0;
-let _52WeekLow = 0;
-let _200DayAvg = 0;
-let marketCap = 0;
-let lastDividendAmount = 0;
-let beta = 0;
 let dailyOpen = 0;
 let prevClose = 0;
 let dailyHigh = 0;
@@ -111,6 +118,7 @@ var chart = new Chart(ctx, {
   options: {},
 });
 
+//get NYSE function 
 function getNYSETickerSymbol(truck) {
   let searchNYSETickerURL = baseNYSETickerURL + truck;
   console.log("this is the URL to search for ticker", searchNYSETickerURL);
@@ -125,6 +133,7 @@ function getNYSETickerSymbol(truck) {
   });
 }
 
+//get NASDAQ function
 function getNASDAQTickerSymbol(truck) {
   let searchNASDAQTickerURL = baseNASDAQTickerURL + truck;
   console.log("this is the URL to search for ticker", searchNASDAQTickerURL);
@@ -139,6 +148,7 @@ function getNASDAQTickerSymbol(truck) {
   });
 }
 
+//get company profile function
 function getProfile(car) {
   let searchProfileURL = baseProfileURL + car;
   console.log("this is the URL to search for profile", searchProfileURL);
@@ -172,9 +182,14 @@ function getProfile(car) {
     console.log("52 week low: " + _52WeekLow);
     _52WeekHigh = profileData["52WeekHigh"];
     console.log("52 week high: " + _52WeekHigh);
+    let company = $("")
+    $("#test").text(companyName)
+    $("#test").text(companyDescription)
+
   });
 }
 
+//get quote function
 function getQuote(hybrid) {
   let searchQuoteURL = baseQuoteURL + hybrid;
   console.log("this is the URL to search for quote", searchQuoteURL);
@@ -205,6 +220,7 @@ function getQuote(hybrid) {
   });
 }
 
+//get chart info function
 function getChartInfo(miniVan) {
   let searchChartURL = baseChartURL + miniVan;
 
@@ -275,6 +291,7 @@ function getStockNews() {
   });
 }
 
+//NYSE click event 
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nyse-ticker-input").val().trim();
@@ -282,6 +299,7 @@ $("#nyse-ticker-searchBtn").on("click", function () {
   getNYSETickerSymbol(ticker);
 });
 
+//NASDAQ click event
 $("#nasdaq-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nasdaq-ticker-input").val().trim();
@@ -289,6 +307,7 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
   getNASDAQTickerSymbol(ticker);
 });
 
+//company search click event
 $("#stock-profile-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#stock-profile-input").val().trim();
