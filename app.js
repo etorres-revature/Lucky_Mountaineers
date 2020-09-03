@@ -195,19 +195,24 @@ function getProfile(car) {
         // console.log("52 week low: " + _52WeekLow);
         _52WeekHigh = profileData["52WeekHigh"];
         // console.log("52 week high: " + _52WeekHigh);
+        let company = $("<div>")
+        company.append("<p>",companyName)
+        company.append("<p>", companyDescription)
+      $("#company-profile").append(company)
+
+      $("#left-ul").append("<li>", price);
+      $("right-ul").append("<li>",price);
+    
+      
+
+
+        
     });
 }
 
-//functionto get current price and other information for selected stock
-console.log("52 week high: " + _52WeekHigh);
-let company = $("")
-$("#test").text(companyName)
-$("#test").text(companyDescription)
-
-});
-}
 
 //get quote function
+//functionto get current price and other information for selected stock
 function getQuote(hybrid) {
     //setting search URL based on user input
     let searchQuoteURL = baseQuoteURL + hybrid;
