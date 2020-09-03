@@ -1,83 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Financial News you can use</title>
     <!-- Compressed CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css"
-      integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I="
-      crossorigin="anonymous"
-    />
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous" />
     <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <header>
-      <h1>Stock Quotes</h1>
+        <h1>Stock Quotes</h1>
     </header>
 
-    <label for="nyse-ticker"
-      >Enter a company to find ticker symbol (NYSE only):
-      <input
-        id="nyse-ticker-input"
-        type="text"
-        name="nyse-ticker"
-        placeholder="Enter a company name traded on NYSE..."
-      />
-      <button id="nyse-ticker-searchBtn" type="button" class="success button">
-        Search
-      </button>
-    </label>
 
-    <label for="nasdaq-ticker"
-      >Enter a company to find ticker symbol (NASDAQ only):
-      <input
-        id="nasdaq-ticker-input"
-        type="text"
-        name="nasdaq-ticker"
-        placeholder="Enter a company name traded on NASDAQ..."
-      />
-      <button id="nasdaq-ticker-searchBtn" type="button" class="success button">
-        Search
-      </button>
-    </label>
+    <div class="flex mb-4">
 
-    <label for="ticker"
-      >Enter a stock for company profile:
-      <input
-        id="stock-profile-input"
-        type="text"
-        name="stock-profile"
-        placeholder="Enter a stock symbol..."
-      />
-      <button id="stock-profile-searchBtn" type="button" class="success button">
-        Search
-      </button>
-    </label>
+        <div class="w-1/3">
 
-    <div id="chart" class="grid-container">
-      <canvas id="myChart"></canvas>
+            <form class="w-full max-w-sm">
+                <label for="ticker">Enter a company to find ticker symbol (NYSE only)</label>
+                <div class="flex items-center border-teal-500 py-2">
+                    <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Enter company traded on NYSE..." aria-label="Full name" id="ticker">
+                    <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded" 
+                    id="nyse-ticker-searchBtn"
+                    type="button">
+                    Search
+                  </button>
+                </div>
+
+            </form>
+
+
+            <form class="w-full max-w-sm">
+                <label for="ticker">Enter a company to find ticker symbol (NASDAQ only)</label>
+                <div class="flex items-center border-teal-500 py-2">
+                    <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Enter company traded on NASDAQ..." aria-label="Full name" id="nasdaq-ticker-input">
+                    <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded" 
+                    id="nasdaq-ticker-searchBtn"
+                    type="button">
+                  Search
+                </button>
+                </div>
+
+            </form>
+
+
+            <form class="w-full max-w-sm">
+                <label for="ticker">Enter a stock for company profile:</label>
+                <div class="flex items-center border-teal-500 py-2">
+                    <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="Enter a stock symbol..." aria-label="Full name" id="stock-profile-input">
+                    <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded" 
+                    id="stock-profile-searchBtn"
+                    type="button">
+                  Search
+                </button>
+                </div>
+
+            </form>
+
+
+        </div>
+
+
+        <div class="w-2/3 border border-green-400">
+            <h4 style="margin: 10px">
+                Company profile
+            </h4>
+            <div id = "test"></div>
+        </div>
+
     </div>
 
-    <div class="grid-container">
-      <div id="stock-news"></div>
+    <div class="flex mb-4">
+
+        <div class="w-1/2 h-auto flex-auto">
+            <div id="chart">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+
+        <div class="w-1/2 h-auto border border-green-400">
+            <h4 style="margin: 10px">
+                Stock Information
+            </h4>
+
+            <div class="flex">
+
+                <div class="w-1/2 h-auto flex-auto">
+
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+
+                <div class="w-1/2 h-auto flex-auto">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="flex">
+
+        <div class="w-full" id="stock-news">
+            Stock News
+
+
+        </div>
     </div>
 
     <div class="spacer"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.js"
-      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js"
-      integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o="
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
     <script src="app.js"></script>
-  </body>
+</body>
+
 </html>
