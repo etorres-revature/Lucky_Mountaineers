@@ -161,40 +161,6 @@ function getNASDAQTickerSymbol(truck) {
 
 //get company profile function
 function getProfile(car) {
-  let searchProfileURL = baseProfileURL + car;
-  console.log("this is the URL to search for profile", searchProfileURL);
-
-  $.ajax({
-    url: searchProfileURL,
-    method: "GET",
-  }).then(function (profileData) {
-    console.log(profileData);
-    companyName = profileData.Name;
-    console.log(companyName, "is the company");
-    companyDescription = profileData.Description;
-    console.log("this is the description", companyDescription);
-    exchange = profileData.Exchange;
-    console.log("traded on ", exchange);
-    marketSector = profileData.Sector;
-    console.log("market sector =", marketSector);
-    ratioPE = profileData.PERatio;
-    console.log("Profits/Earnings ratio = ", ratioPE);
-    marketCap = profileData.MarketCapitalization;
-    console.log("Market Cap is ", marketCap);
-    lastDividendAmount = profileData.DividendPerShare;
-    console.log("amount of last dividend", lastDividendAmount);
-    lastDividendDate = profileData.DividendDate;
-    console.log("last divdend on", lastDividendDate);
-    beta = profileData.Beta;
-    console.log(companyName + " beta", beta);
-    _200DayAvg = profileData["200DayMovingAverage"];
-    console.log("200 day average", _200DayAvg);
-    _52WeekLow = profileData["52WeekLow"];
-    console.log("52 week low: " + _52WeekLow);
-    _52WeekHigh = profileData["52WeekHigh"];
-    console.log("52 week high: " + _52WeekHigh);
-  });
-
   clearData();
 
   //setting search URL based on user input
