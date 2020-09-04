@@ -137,7 +137,8 @@ function getNYSETickerSymbol(truck) {
     // console.log(nyseTickerData);
     //setting ticker variable for use in app
     ticker = nyseTickerData[0].symbol;
-    // console.log(ticker);
+    console.log(ticker);
+    $("#nyse-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "red");
   });
 }
 
@@ -155,7 +156,8 @@ function getNASDAQTickerSymbol(truck) {
     // console.log(nasdaqTickerData);
     //setting ticker variable for use in app
     ticker = nasdaqTickerData[0].symbol;
-    // console.log(ticker);
+    console.log(ticker);
+    $("#nasdaq-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "red");
   });
 }
 
@@ -450,6 +452,7 @@ $("#nyse-ticker-searchBtn").on("click", function () {
   ticker = $("#nyse-ticker-input").val().trim();
   //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
   ticker = ticker.split(" ").join("_");
+  console.log(ticker);
   //sending ticker to search for ticker symbol
   getNYSETickerSymbol(ticker);
 });
@@ -463,6 +466,7 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
   ticker = $("#nasdaq-ticker-input").val().trim();
   //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
   ticker = ticker.split(" ").join("_");
+  console.log(ticker);
   //sending ticker to search for ticker symbol
   getNASDAQTickerSymbol(ticker);
 });
