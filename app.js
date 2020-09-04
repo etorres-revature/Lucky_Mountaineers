@@ -160,6 +160,7 @@ function getNASDAQTickerSymbol(truck) {
 
 //get company profile function
 function getProfile(car) {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 <<<<<<< Updated upstream
   let searchProfileURL = baseProfileURL + car;
@@ -196,6 +197,9 @@ function getProfile(car) {
     console.log("52 week high: " + _52WeekHigh);
   });
 =======
+=======
+    clearData();
+>>>>>>> Stashed changes
     //setting search URL based on user input
     let searchProfileURL = baseProfileURL + car;
     // console.log("this is the URL to search for profile", searchProfileURL);
@@ -231,6 +235,7 @@ function getProfile(car) {
         // console.log("52 week low: " + _52WeekLow);
         _52WeekHigh = profileData["52WeekHigh"];
         // console.log("52 week high: " + _52WeekHigh);
+<<<<<<< Updated upstream
         let company = $("<div>")
         company.append("<p>",companyName)
         company.append("<p>", companyDescription)
@@ -243,10 +248,26 @@ function getProfile(car) {
 
 
         
+=======
+//putting the company description in the div
+        let companyDiv = $("#company-info");
+        companyDiv.append("<p>", companyDescription)
+//adding information from this ajax call to front-end
+        $("#left-ul").append("<li>Company Name: "+companyName+"</li>")
+        $("#right-ul").append("<li>Market Sector: "+marketSector+"</li>");
+        $("#right-ul").append("<li>Exchange: "+exchange.toUpperCase()+"</li>");
+        $("#right-ul").append("<li>Market Capitalization: "+marketCap+"</li>");
+        $("#right-ul").append("<li>BETA: "+beta+"</li>");
+        $("#right-ul").append("<li>52 week low: $"+_52WeekLow+"</li>");
+        $("#right-ul").append("<li>52 week high: $"+ _52WeekHigh+"</li>");
+        $("#right-ul").append("<li>Last dividend amount per share: $"+ lastDividendAmount+"</li>");
+        $("#right-ul").append("<li>Last dividend date: "+ lastDividendDate+"</li>");
+>>>>>>> Stashed changes
     });
 >>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
 }
 
+<<<<<<< Updated upstream
 
 //get quote function
 //functionto get current price and other information for selected stock
@@ -331,6 +352,8 @@ function getQuote(hybrid) {
         $("#right-ul").append("<li>Last dividend date: "+ lastDividendDate+"</li>");
     });
 }
+=======
+>>>>>>> Stashed changes
 
 
 //get quote function
@@ -348,11 +371,15 @@ function getQuote(hybrid) {
         //JS promise to complete after ajax call returns
     }).then(function(quoteData) {
         //pulling values out of the returned object and putting them in global variables to populate the front-end elements
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         console.log(quoteData);
 =======
         // console.log(quoteData);
 >>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
+=======
+        console.log(quoteData);
+>>>>>>> Stashed changes
         price = quoteData["Global Quote"]["05. price"];
         // console.log("Price is " + price);
         changePercent = quoteData["Global Quote"]["10. change percent"];
@@ -371,7 +398,10 @@ function getQuote(hybrid) {
         // console.log("volume for day" + dailyVolume);
         lastTradingDay = quoteData["Global Quote"]["07. latest trading day"];
         // console.log("last trading day", lastTradingDay);
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 
         //adding information from this ajax call to front-end
         $("#left-ul").append("<li>Price: $"+price+"</li>");
@@ -381,9 +411,12 @@ function getQuote(hybrid) {
         $("#left-ul").append("<li>Daily high: $"+dailyHigh+"</li>");
         $("#left-ul").append("<li>Daily volume: "+ dailyVolume+"</li>");
         $("#left-ul").append("<li>Last trading date: "+lastTradingDay+"</li>");
+<<<<<<< Updated upstream
     });
 >>>>>>> Stashed changes
 =======
+=======
+>>>>>>> Stashed changes
     });
 >>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
 }
@@ -492,6 +525,7 @@ function getStockNews() {
     });
 }
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 <<<<<<< Updated upstream
 $("#nyse-ticker-searchBtn").on("click", function () {
@@ -500,14 +534,19 @@ $("#nyse-ticker-searchBtn").on("click", function () {
   ticker = ticker.split(" ").join("_");
   getNYSETickerSymbol(ticker);
 =======
+=======
+>>>>>>> Stashed changes
 function clearData() {
     $("#company-info").empty();
     $("#left-ul").empty();
     $("#right-ul").empty();
 }
 
+<<<<<<< Updated upstream
 =======
 >>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
+=======
+>>>>>>> Stashed changes
 //click function to search for NYSE stock symbols
 //NYSE click event 
 $("#nyse-ticker-searchBtn").on("click", function() {
