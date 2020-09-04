@@ -21,38 +21,47 @@
 //financialmodelingprep.com API key
 //ee6dfd910b7c250ad88b85d3981e27a3
 
-//intrinio API key
-//OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1
+
+//API Query URLs
+
+//setting base URL for each of teh APIs used in the app
+//API Query URLs
 
 const baseNYSETickerURL =
-  "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
+    "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NYSE&query=";
 const baseNASDAQTickerURL =
-  "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NASDAQ&query=";
+    "https://financialmodelingprep.com/api/v3/search?apikey=ee6dfd910b7c250ad88b85d3981e27a3&limit=10&exchange=NASDAQ&query=";
 const baseProfileURL =
-  "https://www.alphavantage.co/query?function=OVERVIEW&apikey=FWDP2B8C75PGXARR&symbol=";
+    "https://www.alphavantage.co/query?function=OVERVIEW&apikey=FWDP2B8C75PGXARR&symbol=";
 const baseQuoteURL =
-  "https://www.alphavantage.co/query?apikey=FWDP2B8C75PGXARR&function=GLOBAL_QUOTE&symbol=";
+    "https://www.alphavantage.co/query?apikey=FWDP2B8C75PGXARR&function=GLOBAL_QUOTE&symbol=";
 const baseChartURL =
-  "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=FWDP2B8C75PGXARR&symbol=";
+    "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&apikey=FWDP2B8C75PGXARR&symbol=";
 const baseNewsURL =
-  "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
+    "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
+
+//setting global variables
 
 let ticker = "";
+
+//global variable for getProfile AJAX call
 let companyName = "";
 let companyDescription = "";
 let exchange = "";
 let marketSector = "";
-let lastDividendDate = "";
 let ratioPE = 0;
+let marketCap = 0;
+let lastDividendAmount = 0;
+let lastDividendDate = "";
+let beta = 0;
+let _200DayAvg = 0;
+let _52WeekLow = 0;
+let _52WeekHigh = 0;
+
+//global variable for getQuote AJAX call
 let price = 0;
 let changePercent = 0;
 let changeValue = 0;
-let _52WeekHigh = 0;
-let _52WeekLow = 0;
-let _200DayAvg = 0;
-let marketCap = 0;
-let lastDividendAmount = 0;
-let beta = 0;
 let dailyOpen = 0;
 let prevClose = 0;
 let dailyHigh = 0;
@@ -60,86 +69,98 @@ let dailyLow = 0;
 let dailyVolume = 0;
 let lastTradingDay = "";
 
+//placeholderData for use in the chart
 let placeholderData = {
-  labels: [
-    "2019-09-30",
-    "2019-10-31",
-    "2019-11-29",
-    "2020-12-31",
-    "2020-01-31",
-    "2020-02-28",
-    "2020-03-31",
-    "2020-04-30",
-    "2020-05-29",
-    "2020-06-30",
-    "2020-07-31",
-    "2020-08-28",
-  ],
-  datasets: [
-    {
-      label: "",
-      backgroundColor: "rgb(255, 99, 132)",
-      borderColor: "rgb(255, 99, 132)",
-      data: [
-        "54.0100",
-        "56.1300",
-        "56.6400",
-        "53.9800",
-        "54.9800",
-        "46.1900",
-        "35.6100",
-        "31.2500",
-        "32.1000",
-        "34.1800",
-        "30.8900",
-        "38.8100",
-      ],
-    },
-  ],
+    labels: [
+        "2019-09-30",
+        "2019-10-31",
+        "2019-11-29",
+        "2020-12-31",
+        "2020-01-31",
+        "2020-02-28",
+        "2020-03-31",
+        "2020-04-30",
+        "2020-05-29",
+        "2020-06-30",
+        "2020-07-31",
+        "2020-08-28",
+    ],
+    datasets: [{
+        label: "",
+        backgroundColor: "rgb(53, 94, 59)",
+        borderColor: "rgb(255, 99, 132)",
+        data: [
+            "54.0100",
+            "56.1300",
+            "56.6400",
+            "53.9800",
+            "54.9800",
+            "46.1900",
+            "35.6100",
+            "31.2500",
+            "32.1000",
+            "34.1800",
+            "30.8900",
+            "38.8100",
+        ],
+    }, ],
 };
 
+//vanila JS to grab chart element(provided by chart.js/https://www.chartjs.org/docs/latest/)
 var ctx = document.getElementById("myChart").getContext("2d");
 
+//chart function - also provided by chart.js/https://www.chartjs.org/docs/latest/
 var chart = new Chart(ctx, {
-  // The type of chart we want to create
-  type: "line",
+    // The type of chart we want to create - chart.js comment
+    type: "line",
 
-  // The data for our dataset
-  data: placeholderData,
+    // The data for our dataset - chart.js comment
+    data: placeholderData,
 
-  // Configuration options go here
-  options: {},
+    // Configuration options go here - chart.js comment
+    options: {},
 });
 
+//function to get NYSE symbol
+//get NYSE function 
 function getNYSETickerSymbol(truck) {
-  let searchNYSETickerURL = baseNYSETickerURL + truck;
-  console.log("this is the URL to search for ticker", searchNYSETickerURL);
-
-  $.ajax({
-    url: searchNYSETickerURL,
-    method: "GET",
-  }).then(function (nyseTickerData) {
-    console.log(nyseTickerData);
-    ticker = nyseTickerData[0].symbol;
-    console.log(ticker);
-  });
+    //adding user input to the end of base URL for API search to get ticker
+    let searchNYSETickerURL = baseNYSETickerURL + truck;
+    // console.log("this is the URL to search for ticker", searchNYSETickerURL);
+    //ajax call to GET information from search URL
+    $.ajax({
+        url: searchNYSETickerURL,
+        method: "GET",
+        //JS promise to complete after ajax call comes back
+    }).then(function(nyseTickerData) {
+        // console.log(nyseTickerData);
+        //setting ticker variable for use in app
+        ticker = nyseTickerData[0].symbol;
+        // console.log(ticker);
+    });
 }
 
+//get NASDAQ function
 function getNASDAQTickerSymbol(truck) {
-  let searchNASDAQTickerURL = baseNASDAQTickerURL + truck;
-  console.log("this is the URL to search for ticker", searchNASDAQTickerURL);
-
-  $.ajax({
-    url: searchNASDAQTickerURL,
-    method: "GET",
-  }).then(function (nasdaqTickerData) {
-    console.log(nasdaqTickerData);
-    ticker = nasdaqTickerData[0].symbol;
-    console.log(ticker);
-  });
+    //adding user input to end of base URL for API search to get ticker
+    let searchNASDAQTickerURL = baseNASDAQTickerURL + truck;
+    // console.log("this is the URL to search for ticker", searchNASDAQTickerURL);
+    //ajax call to GET information from search URL
+    $.ajax({
+        url: searchNASDAQTickerURL,
+        method: "GET",
+        //JS promise to complete after ajax call comes back
+    }).then(function(nasdaqTickerData) {
+        // console.log(nasdaqTickerData);
+        //setting ticker variable for use in app
+        ticker = nasdaqTickerData[0].symbol;
+        // console.log(ticker);
+    });
 }
 
+//get company profile function
 function getProfile(car) {
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   let searchProfileURL = baseProfileURL + car;
   console.log("this is the URL to search for profile", searchProfileURL);
@@ -174,9 +195,63 @@ function getProfile(car) {
     _52WeekHigh = profileData["52WeekHigh"];
     console.log("52 week high: " + _52WeekHigh);
   });
+=======
+    //setting search URL based on user input
+    let searchProfileURL = baseProfileURL + car;
+    // console.log("this is the URL to search for profile", searchProfileURL);
+    //ajax call to GET company profile from search URL
+    $.ajax({
+        url: searchProfileURL,
+        method: "GET",
+        //JS promise to complete after ajax call comes back
+    }).then(function(profileData) {
+        //pulling values out of the returned object and putting them in global variables to populate the front-end elements
+        // console.log(profileData);
+        companyName = profileData.Name;
+        // console.log(companyName, "is the company");
+        companyDescription = profileData.Description;
+        // console.log("this is the description", companyDescription);
+        exchange = profileData.Exchange;
+        // console.log("traded on ", exchange);
+        marketSector = profileData.Sector;
+        // console.log("market sector =", marketSector);
+        ratioPE = profileData.PERatio;
+        // console.log("Profits/Earnings ratio = ", ratioPE);
+        marketCap = profileData.MarketCapitalization;
+        // console.log("Market Cap is ", marketCap);
+        lastDividendAmount = profileData.DividendPerShare;
+        // console.log("amount of last dividend", lastDividendAmount);
+        lastDividendDate = profileData.DividendDate;
+        // console.log("last divdend on", lastDividendDate);
+        beta = profileData.Beta;
+        // console.log(companyName + " beta", beta);
+        _200DayAvg = profileData["200DayMovingAverage"];
+        // console.log("200 day average", _200DayAvg);
+        _52WeekLow = profileData["52WeekLow"];
+        // console.log("52 week low: " + _52WeekLow);
+        _52WeekHigh = profileData["52WeekHigh"];
+        // console.log("52 week high: " + _52WeekHigh);
+        let company = $("<div>")
+        company.append("<p>",companyName)
+        company.append("<p>", companyDescription)
+      $("#company-profile").append(company)
+
+      $("#left-ul").append("<li>", price);
+      $("right-ul").append("<li>",price);
+    
+      
+
+
+        
+    });
+>>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
 }
 
+
+//get quote function
+//functionto get current price and other information for selected stock
 function getQuote(hybrid) {
+<<<<<<< HEAD
   let searchQuoteURL = baseQuoteURL + hybrid;
   console.log("this is the URL to search for quote", searchQuoteURL);
 
@@ -261,6 +336,8 @@ function getQuote(hybrid) {
 //get quote function
 //function to get current price and other information for selected stock
 function getQuote(hybrid) {
+=======
+>>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
     //setting search URL based on user input
     let searchQuoteURL = baseQuoteURL + hybrid;
     // console.log("this is the URL to search for quote", searchQuoteURL);
@@ -271,7 +348,11 @@ function getQuote(hybrid) {
         //JS promise to complete after ajax call returns
     }).then(function(quoteData) {
         //pulling values out of the returned object and putting them in global variables to populate the front-end elements
+<<<<<<< HEAD
         console.log(quoteData);
+=======
+        // console.log(quoteData);
+>>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
         price = quoteData["Global Quote"]["05. price"];
         // console.log("Price is " + price);
         changePercent = quoteData["Global Quote"]["10. change percent"];
@@ -290,6 +371,7 @@ function getQuote(hybrid) {
         // console.log("volume for day" + dailyVolume);
         lastTradingDay = quoteData["Global Quote"]["07. latest trading day"];
         // console.log("last trading day", lastTradingDay);
+<<<<<<< HEAD
 
         //adding information from this ajax call to front-end
         $("#left-ul").append("<li>Price: $"+price+"</li>");
@@ -301,78 +383,116 @@ function getQuote(hybrid) {
         $("#left-ul").append("<li>Last trading date: "+lastTradingDay+"</li>");
     });
 >>>>>>> Stashed changes
+=======
+    });
+>>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
 }
 
+//function to get new chart data based on user input
+//get chart info function
 function getChartInfo(miniVan) {
-  let searchChartURL = baseChartURL + miniVan;
+    //setting search URL based on user input
+    let searchChartURL = baseChartURL + miniVan;
+    //ajax call to GET information from API 
+    $.ajax({
+        url: searchChartURL,
+        method: "GET",
+        //JS promise to complete after AJAX call comes back
+    }).then(function(chartData) {
+        // console.log(chartData);
+        //taking the returned object and pulling out the needed values into an object
+        let timeSeries = chartData["Monthly Time Series"];
+        // console.log("timeSeries", timeSeries);
+        //setting an empty array to hold the results of the for loop below
+        let result = [];
+        //using for in to create an array of keys and values in the empy array
+        for (var i in timeSeries) {
+            result.push([i, timeSeries[i]["4. close"]]);
+        }
+        //using the slice method to make the array only the values for the past 12 months
+        var newResult = result.slice(0, 12);
+        // console.log("result", newResult);
 
-  $.ajax({
-    url: searchChartURL,
-    method: "GET",
-  }).then(function (chartData) {
-    console.log(chartData);
-    let timeSeries = chartData["Monthly Time Series"];
-    console.log("timeSeries", timeSeries);
-    let result = [];
-    for (var i in timeSeries) {
-      result.push([i, timeSeries[i]["4. close"]]);
-    }
-    var newResult = result.slice(0, 12);
-    console.log("result", newResult);
-
-    let labels = [];
-    let dataset = [];
-    for (var i = 0; i < newResult.length; i++) {
-      let chartDate = newResult[i][0];
-      let chartPrice = newResult[i][1];
-      console.log(chartDate);
-      console.log(chartPrice);
-      labels.unshift(chartDate);
-      dataset.unshift(chartPrice);
-    }
-    setChartData(chart, labels, dataset);
-  });
+        //creating empty arrays to populate information into placeholderData with new information for company selected through user input
+        let labels = [];
+        let dataset = [];
+        //for loop to take data from the 12 input long array and put it into the appropriate array for x and y axis of chart
+        for (var i = 0; i < newResult.length; i++) {
+            //taking object array key(date) and putting into the x axis
+            let chartDate = newResult[i][0];
+            //taking object array value(price) and putting into the y axis
+            let chartPrice = newResult[i][1];
+            // console.log(chartDate);
+            // console.log(chartPrice);
+            //adding each to the begining of the array to invert the order so the chart goes from oldest date to newest
+            labels.unshift(chartDate);
+            dataset.unshift(chartPrice);
+        }
+        //running the funciton to update chart 
+        setChartData(chart, labels, dataset);
+    });
 }
 
+//funciton to update chart - big ups to Tariq for helping us with this aspect
 function setChartData(chart, labels, dataset) {
-  chart.data.labels = labels;
-  chart.data.datasets[0].data = dataset;
-  chart.update();
+    //adding the dates to the x axis
+    chart.data.labels = labels;
+    //adding the price to the y axis
+    chart.data.datasets[0].data = dataset;
+    //setting the chart label to the stock ticker searched 
+    chart.data.datasets[0].label = ticker.toUpperCase();
+    // console.log("Chart Title right here", chartTitle);
+    chart.update();
 }
 
+//function to clear chart - also with Tariq's help
 function clearChartData(chart) {
-  chart.data.labels = [];
-  chart.data.datasets.forEach(function (dataset) {
-    dataset.data = [];
-  });
-  chart.update();
+    chart.data.labels = [];
+    chart.data.datasets.forEach(function(dataset) {
+        dataset.data = [];
+    });
+    chart.update();
 }
 
+//function to get latest stock market news 
 function getStockNews() {
-  $.ajax({
-    url: baseNewsURL,
-    method: "GET",
-  }).then(function (newsData) {
-    console.log(newsData);
-    let divStockNews = $("#stock-news");
-    divStockNews.append("<hr>");
-    for(var i = 0; i < newsData.news.length; i++) {
-      let publicationDate = newsData.news[i].publication_date;
-      console.log(publicationDate);
-      let publicationDate1 = publicationDate.slice(0, 10);
-      let newPublicationDate = publicationDate1 + ": " 
-      let publicationTitle = newsData.news[i].title;
-      console.log(publicationTitle);
-      let publicationURL = newsData.news[i].url;
-      console.log(publicationURL);
-      divStockNews.append("<p id=publication-date>"+newPublicationDate+"</p>");
-      divStockNews.append("<p id=pubication-title>"+ publicationTitle +"</p>");
-      divStockNews.append("<a id=publication-URL href="+publicationURL+">"+publicationURL+"</a>");
-    divStockNews.append("<hr>")
-    }
-  });
+    //ajax call to GET needed information from base URL(also search URL in this instance)
+    $.ajax({
+        url: baseNewsURL,
+        method: "GET",
+        //JS promise to complete after ajax call comes back
+    }).then(function(newsData) {
+        // console.log(newsData);
+        //using jQuery to get dummy div on prototype html
+        let divStockNews = $("#stock-news");
+        //adding an hr to the top of the display
+        divStockNews.append("<hr>");
+        //for loop to populate html with current stock news
+        for (var i = 0; i < newsData.news.length; i++) {
+            //setting variable to contain publication dat
+            let publicationDate = newsData.news[i].publication_date;
+            // console.log(publicationDate);
+            //variable holding a sliced form of the publication date
+            let publicationDate1 = publicationDate.slice(0, 10);
+            //variable holding the final publication date and a ":" to display on screen
+            let newPublicationDate = publicationDate1 + ": "
+                //variable to hold article title
+            let publicationTitle = newsData.news[i].title;
+            // console.log(publicationTitle);
+            //variable to hold URL link to article
+            let publicationURL = newsData.news[i].url;
+            // console.log(publicationURL);
+            //jQuery appending title, date, and publication to dummy html elements to see how display looks
+            divStockNews.append("<p id=publication-date>" + newPublicationDate + "</p>");
+            divStockNews.append("<p id=pubication-title>" + publicationTitle + "</p>");
+            divStockNews.append("<a id=publication-URL href=" + publicationURL + ">" + publicationURL + "</a>");
+            //adding an hr below each entry for style.
+            divStockNews.append("<hr>")
+        }
+    });
 }
 
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
@@ -386,6 +506,8 @@ function clearData() {
     $("#right-ul").empty();
 }
 
+=======
+>>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
 //click function to search for NYSE stock symbols
 //NYSE click event 
 $("#nyse-ticker-searchBtn").on("click", function() {
@@ -397,22 +519,40 @@ $("#nyse-ticker-searchBtn").on("click", function() {
     ticker = ticker.split(" ").join("_");
     //sending ticker to search for ticker symbol
     getNYSETickerSymbol(ticker);
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> e7863127c9748fdd4bad7a05cfe72b1fa2906c5d
 });
 
-$("#nasdaq-ticker-searchBtn").on("click", function () {
-  event.preventDefault();
-  ticker = $("#nasdaq-ticker-input").val().trim();
-  ticker = ticker.split(" ").join("_");
-  getNASDAQTickerSymbol(ticker);
+//click function to search for NASDAQ stock symbols
+//NASDAQ click event
+$("#nasdaq-ticker-searchBtn").on("click", function() {
+    //preventing default action of button
+    event.preventDefault();
+    //setting ticker to the value input by the user 
+    ticker = $("#nasdaq-ticker-input").val().trim();
+    //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
+    ticker = ticker.split(" ").join("_");
+    //sending ticker to search for ticker symbol
+    getNASDAQTickerSymbol(ticker);
 });
 
-$("#stock-profile-searchBtn").on("click", function () {
-  event.preventDefault();
-  ticker = $("#stock-profile-input").val().trim();
-  ticker - ticker.split(" ").join("_");
-  getProfile(ticker);
-  getQuote(ticker);
-  getChartInfo(ticker);
-  getStockNews();
+//click function to search for user input stock symbol
+//company search click event
+$("#stock-profile-searchBtn").on("click", function() {
+    //preventing defautl action of button
+    event.preventDefault();
+    //setting ticker to the value input bgy the user
+    ticker = $("#stock-profile-input").val().trim();
+    //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
+    ticker - ticker.split(" ").join("_");
+    //running function to get profile information of user selected company
+    getProfile(ticker);
+    //running function to get current price information of user selected company
+    getQuote(ticker);
+    //running function to update chart with historical price/date information to update chart to user selected company
+    getChartInfo(ticker);
+    //getting latest stock news and displaying on screen
+    getStockNews();
 });
