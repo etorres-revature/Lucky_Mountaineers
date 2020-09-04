@@ -140,6 +140,7 @@ function getNASDAQTickerSymbol(truck) {
 }
 
 function getProfile(car) {
+<<<<<<< Updated upstream
   let searchProfileURL = baseProfileURL + car;
   console.log("this is the URL to search for profile", searchProfileURL);
 
@@ -203,6 +204,103 @@ function getQuote(hybrid) {
     lastTradingDay = quoteData["Global Quote"]["07. latest trading day"];
     console.log("last trading day", lastTradingDay);
   });
+=======
+    clearData();
+    //setting search URL based on user input
+    let searchProfileURL = baseProfileURL + car;
+    // console.log("this is the URL to search for profile", searchProfileURL);
+    //ajax call to GET company profile from search URL
+    $.ajax({
+        url: searchProfileURL,
+        method: "GET",
+        //JS promise to complete after ajax call comes back
+    }).then(function(profileData) {
+        //pulling values out of the returned object and putting them in global variables to populate the front-end elements
+        // console.log(profileData);
+        companyName = profileData.Name;
+        // console.log(companyName, "is the company");
+        companyDescription = profileData.Description;
+        // console.log("this is the description", companyDescription);
+        exchange = profileData.Exchange;
+        // console.log("traded on ", exchange);
+        marketSector = profileData.Sector;
+        // console.log("market sector =", marketSector);
+        ratioPE = profileData.PERatio;
+        // console.log("Profits/Earnings ratio = ", ratioPE);
+        marketCap = profileData.MarketCapitalization;
+        // console.log("Market Cap is ", marketCap);
+        lastDividendAmount = profileData.DividendPerShare;
+        // console.log("amount of last dividend", lastDividendAmount);
+        lastDividendDate = profileData.DividendDate;
+        // console.log("last divdend on", lastDividendDate);
+        beta = profileData.Beta;
+        // console.log(companyName + " beta", beta);
+        _200DayAvg = profileData["200DayMovingAverage"];
+        // console.log("200 day average", _200DayAvg);
+        _52WeekLow = profileData["52WeekLow"];
+        // console.log("52 week low: " + _52WeekLow);
+        _52WeekHigh = profileData["52WeekHigh"];
+        // console.log("52 week high: " + _52WeekHigh);
+//putting the company description in the div
+        let companyDiv = $("#company-info");
+        companyDiv.append("<p>", companyDescription)
+//adding information from this ajax call to front-end
+        $("#left-ul").append("<li>Company Name: "+companyName+"</li>")
+        $("#right-ul").append("<li>Market Sector: "+marketSector+"</li>");
+        $("#right-ul").append("<li>Exchange: "+exchange.toUpperCase()+"</li>");
+        $("#right-ul").append("<li>Market Capitalization: "+marketCap+"</li>");
+        $("#right-ul").append("<li>BETA: "+beta+"</li>");
+        $("#right-ul").append("<li>52 week low: $"+_52WeekLow+"</li>");
+        $("#right-ul").append("<li>52 week high: $"+ _52WeekHigh+"</li>");
+        $("#right-ul").append("<li>Last dividend amount per share: $"+ lastDividendAmount+"</li>");
+        $("#right-ul").append("<li>Last dividend date: "+ lastDividendDate+"</li>");
+    });
+}
+
+
+//get quote function
+//function to get current price and other information for selected stock
+function getQuote(hybrid) {
+    //setting search URL based on user input
+    let searchQuoteURL = baseQuoteURL + hybrid;
+    // console.log("this is the URL to search for quote", searchQuoteURL);
+    //ajax call to GET information from search URL to populate needed information
+    $.ajax({
+        url: searchQuoteURL,
+        method: "GET",
+        //JS promise to complete after ajax call returns
+    }).then(function(quoteData) {
+        //pulling values out of the returned object and putting them in global variables to populate the front-end elements
+        console.log(quoteData);
+        price = quoteData["Global Quote"]["05. price"];
+        // console.log("Price is " + price);
+        changePercent = quoteData["Global Quote"]["10. change percent"];
+        // console.log("change percent", changePercent);
+        changeValue = quoteData["Global Quote"]["09. change"];
+        // console.log("absolute change", changeValue);
+        dailyOpen = quoteData["Global Quote"]["02. open"];
+        // console.log("daily trading open " + dailyOpen);
+        prevClose = quoteData["Global Quote"]["08. previous close"];
+        // console.log("previous trading close");
+        dailyHigh = quoteData["Global Quote"]["03. high"];
+        // console.log("daily trading high", dailyHigh);
+        dailyLow = quoteData["Global Quote"]["04. low"];
+        // console.log("daily trading low", dailyLow);
+        dailyVolume = quoteData["Global Quote"]["06. volume"];
+        // console.log("volume for day" + dailyVolume);
+        lastTradingDay = quoteData["Global Quote"]["07. latest trading day"];
+        // console.log("last trading day", lastTradingDay);
+
+        //adding information from this ajax call to front-end
+        $("#left-ul").append("<li>Price: $"+price+"</li>");
+        $("#left-ul").append("<li>Change: "+changeValue+"%</li>");
+        $("#left-ul").append("<li>Change percent: "+changePercent+"</li>");
+        $("#left-ul").append("<li>Daily low: $"+dailyLow+"</li>");
+        $("#left-ul").append("<li>Daily high: $"+dailyHigh+"</li>");
+        $("#left-ul").append("<li>Daily volume: "+ dailyVolume+"</li>");
+        $("#left-ul").append("<li>Last trading date: "+lastTradingDay+"</li>");
+    });
+>>>>>>> Stashed changes
 }
 
 function getChartInfo(miniVan) {
@@ -275,11 +373,31 @@ function getStockNews() {
   });
 }
 
+<<<<<<< Updated upstream
 $("#nyse-ticker-searchBtn").on("click", function () {
   event.preventDefault();
   ticker = $("#nyse-ticker-input").val().trim();
   ticker = ticker.split(" ").join("_");
   getNYSETickerSymbol(ticker);
+=======
+function clearData() {
+    $("#company-info").empty();
+    $("#left-ul").empty();
+    $("#right-ul").empty();
+}
+
+//click function to search for NYSE stock symbols
+//NYSE click event 
+$("#nyse-ticker-searchBtn").on("click", function() {
+    //preventing default action of button
+    event.preventDefault();
+    //setting ticker to the value input by the user
+    ticker = $("#nyse-ticker-input").val().trim();
+    //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
+    ticker = ticker.split(" ").join("_");
+    //sending ticker to search for ticker symbol
+    getNYSETickerSymbol(ticker);
+>>>>>>> Stashed changes
 });
 
 $("#nasdaq-ticker-searchBtn").on("click", function () {
