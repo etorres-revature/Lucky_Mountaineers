@@ -16,6 +16,14 @@ input {
     display: inline-block;
 }
 
+#nyse-ticker-input,
+#nasdaq-ticker-input,
+#stock-profile-input {
+    /* create border box */
+    border: 1px solid #ccc;
+    margin-left: 10px;
+}
+
 .stock-info {
     display: inline;
     width: 50%;
@@ -29,5 +37,4 @@ h4 {
 
 label {
     margin-left: 10px;
-    display: inline;
 }
