@@ -21,3 +21,13 @@ input {
     width: 50%;
     height: 100%;
 }
+
+h4 {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+label {
+    margin-left: 10px;
+    display: inline;
+}
