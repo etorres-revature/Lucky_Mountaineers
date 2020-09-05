@@ -30,11 +30,32 @@ input {
     height: 100%;
 }
 
+
+/* all secondary titles bold and 20px in size (company profile, stock information and stock news) */
+
 h4 {
     font-weight: bold;
     font-size: 20px;
 }
 
+
+/* margin to the left for all the info above input boxes */
+
 label {
     margin-left: 10px;
+}
+
+
+/* trick to put the background with imagee faded */
+
+body::after {
+    content: "";
+    background: url(Background.png);
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
 }
