@@ -1,7 +1,7 @@
 /* define size of chart */
 
 div#chart {
-    border: 1px solid darkslategray;
+    border: 1px;
     height: 100%;
     width: 100%;
 }
@@ -36,6 +36,13 @@ input {
 }
 
 
+/* border on specific ticker searches */
+
+fieldset {
+    border: 1px solid #000;
+}
+
+
 /* what does it do? */
 
 
@@ -48,7 +55,9 @@ input {
 
 /* all secondary titles bold and 20px in size (company profile, stock information and stock news) */
 
-h4 {
+h4,
+legend,
+.labelTicker {
     font-weight: bold;
     font-size: 20px;
 }
@@ -63,7 +72,7 @@ label {
 
 /* trick to put the background with imagee faded */
 
-body::after {
+.stockInfo::after {
     content: "";
     background: url(Background.png);
     opacity: 0.2;
@@ -71,6 +80,7 @@ body::after {
     left: 0;
     bottom: 0;
     right: 0;
-    position: absolute;
+    size: 100%;
+    position: relative;
     z-index: -1;
 }
