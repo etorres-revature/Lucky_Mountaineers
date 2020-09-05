@@ -1,34 +1,49 @@
+/* define size of chart */
+
 div#chart {
     border: 1px solid darkslategray;
     height: 100%;
     width: 100%;
 }
 
+
+/* what does it do? */
+
+
+/* 
 div.spacer {
     height: 125px;
-}
+} */
 
+
+/* 
 button {
     display: inline-block;
 }
 
 input {
     display: inline-block;
-}
+} */
+
+
+/* create border box */
 
 #nyse-ticker-input,
 #nasdaq-ticker-input,
 #stock-profile-input {
-    /* create border box */
     border: 1px solid #ccc;
     margin-left: 10px;
 }
 
-.stock-info {
+
+/* what does it do? */
+
+
+/* .stock-info {
     display: inline;
     width: 50%;
     height: 100%;
-}
+} */
 
 
 /* all secondary titles bold and 20px in size (company profile, stock information and stock news) */
