@@ -1,23 +1,86 @@
+/* define size of chart */
+
 div#chart {
-    border: 1px solid darkslategray;
+    border: 1px;
     height: 100%;
     width: 100%;
 }
 
+
+/* what does it do? */
+
+
+/* 
 div.spacer {
     height: 125px;
-}
+} */
 
+
+/* 
 button {
     display: inline-block;
 }
 
 input {
     display: inline-block;
+} */
+
+
+/* create border box */
+
+#nyse-ticker-input,
+#nasdaq-ticker-input,
+#stock-profile-input {
+    border: 1px solid #ccc;
+    margin-left: 10px;
 }
 
-.stock-info {
+
+/* border on specific ticker searches */
+
+fieldset {
+    border: 1px solid #000;
+}
+
+
+/* what does it do? */
+
+
+/* .stock-info {
     display: inline;
     width: 50%;
     height: 100%;
+} */
+
+
+/* all secondary titles bold and 20px in size (company profile, stock information and stock news) */
+
+h4,
+legend,
+.labelTicker {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+/* margin to the left for all the info above input boxes */
+
+label {
+    margin-left: 10px;
+}
+
+
+/* trick to put the background with imagee faded */
+
+.stockInfo::after {
+    content: "";
+    background: url(Background.png);
+    opacity: 0.2;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    size: 100%;
+    position: relative;
+    z-index: -1;
 }
