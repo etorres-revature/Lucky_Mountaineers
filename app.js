@@ -170,10 +170,10 @@ function getNASDAQTickerSymbol(truck) {
       .css("display", "block")
       .css("background", "red");
 
-      getProfile(ticker);
-      getQuote(ticker);
-      getChartInfo(ticker);
-      getStockNews();
+    getProfile(ticker);
+    getQuote(ticker);
+    getChartInfo(ticker);
+    getStockNews();
   });
 }
 
@@ -227,9 +227,18 @@ function getProfile(car) {
     $("#right-ul").append("<li>BETA: " + beta + "</li>");
     $("#right-ul").append("<li>52 week low: $" + _52WeekLow + "</li>");
     $("#right-ul").append("<li>52 week high: $" + _52WeekHigh + "</li>");
-    $("#right-ul").append(
-      "<li>Last dividend amount per share: $" + lastDividendAmount + "</li>"
-    );
+
+    // we don't put $ sign if no dividend
+    if (isNaN()) {
+      $("#right-ul").append(
+        "<li>Last dividend amount per share: " + lastDividendAmount + "</li>"
+      );
+    } else {
+      $("#right-ul").append(
+        "<li>Last dividend amount per share: $" + lastDividendAmount + "</li>"
+      );
+    }
+
     $("#right-ul").append(
       "<li>Last dividend date: " + lastDividendDate + "</li>"
     );
@@ -329,9 +338,25 @@ function getQuote(hybrid) {
     // console.log("last trading day", lastTradingDay);
 
     //adding information from this ajax call to front-end
-    $("#left-ul").append("<li>Price: $" + price + "</li>");
-    $("#left-ul").append("<li>Change: " + changeValue + "%</li>");
-    $("#left-ul").append("<li>Change percent: " + changePercent + "</li>");
+
+    // change of color green/red depending on the move
+    $("#left-ul").append(
+      "<li>Change: <span class='changeOfColor'>" + changeValue + "</span></li>"
+    );
+    $("#left-ul").append(
+      "<li>Change: <span class='changeOfColor'>" +
+        changePercent +
+        "</span></li>"
+    );
+
+    if (changeValue < 0) {
+      console.log("going down");
+      $(".changeOfColor").attr("style", "color: red");
+    } else {
+      console.log("up");
+      $(".changeOfColor").attr("style", "color: green");
+    }
+
     $("#left-ul").append("<li>Daily low: $" + dailyLow + "</li>");
     $("#left-ul").append("<li>Daily high: $" + dailyHigh + "</li>");
     $("#left-ul").append("<li>Daily volume: " + dailyVolume + "</li>");
@@ -457,6 +482,7 @@ function clearData() {
   $("#company-info").empty();
   $("#left-ul").empty();
   $("#right-ul").empty();
+  $(".changeOfColor").empty();
 }
 
 //click function to search for NYSE stock symbols
@@ -490,18 +516,18 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
 //click function to search for user input stock symbol
 //company search click event
 // $("#stock-profile-searchBtn").on("click", function () {
-  //preventing defautl action of button
-  // event.preventDefault();
-  //setting ticker to the value input bgy the user
-  // ticker = $("#stock-profile-input").val().trim();
-  //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
-  // ticker - ticker.split(" ").join("_");
-  //running function to get profile information of user selected company
-  // getProfile(ticker);
-  //running function to get current price information of user selected company
-  // getQuote(ticker);
-  //running function to update chart with historical price/date information to update chart to user selected company
-  // getChartInfo(ticker);
-  //getting latest stock news and displaying on screen
+//preventing defautl action of button
+// event.preventDefault();
+//setting ticker to the value input bgy the user
+// ticker = $("#stock-profile-input").val().trim();
+//splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
+// ticker - ticker.split(" ").join("_");
+//running function to get profile information of user selected company
+// getProfile(ticker);
+//running function to get current price information of user selected company
+// getQuote(ticker);
+//running function to update chart with historical price/date information to update chart to user selected company
+// getChartInfo(ticker);
+//getting latest stock news and displaying on screen
 //   getStockNews();
 // });
