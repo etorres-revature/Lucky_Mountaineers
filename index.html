@@ -19,29 +19,67 @@
 
     <!-- 3 search boxes -->
     <div class="flex mb-4">
+      <div class="w-1/3">
+        <form class="w-full max-w-sm">
+          <label for="nyse-ticker-input"
+            >Enter a company to find ticker symbol (NYSE only)</label
+          >
+          <div class="flex items-center border-teal-500 py-2">
+            <input
+              class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="text"
+              placeholder="Enter company traded on NYSE..."
+              aria-label="Full name"
+              id="nyse-ticker-input"
+            />
+            <button
+              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded"
+              id="nyse-ticker-searchBtn"
+              type="button"
+            >
+              Search
+            </button>
+          </div>
+          <p id="nyse-ticker" style="display: none"></p>
+        </form>
 
+        <form class="w-full max-w-sm">
+          <label for="nasdaq-ticker-inoput"
+            >Enter a company to find ticker symbol (NASDAQ only)</label
+          >
+          <div class="flex items-center border-teal-500 py-2">
+            <input
+              class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="text"
+              placeholder="Enter company traded on NASDAQ..."
+              aria-label="Full name"
+              id="nasdaq-ticker-input"
+            />
+            <button
+              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded"
+              id="nasdaq-ticker-searchBtn"
+              type="button"
+            >
+              Search
+            </button>
+          </div>
+          <p id="nasdaq-ticker" style="display: none"></p>
+        </form>
 
-
-        <div class="w-1/3">
-
-            <fieldset style="margin: -15px 10px 10px 10px;" class="border-green-400">
-                <legend>Ticker Search</legend>
-
-                <!-- Input box for NYSE stocks -->
-                <form class="w-full max-w-sm">
-                    <label for="nyse-ticker-input">NYSE</label>
-                    <div class="flex items-center border-teal-500 py-2">
-                        <input class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-2 px-2 leading-tight focus:outline-none" type="text" placeholder="Company's name..." aria-label="Full name" id="nyse-ticker-input" />
-                        <button class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded" id="nyse-ticker-searchBtn" type="button">
-                    Search
-                  </button>
-                    </div>
-                    <p id="nyse-ticker" style="display: none"></p>
-                </form>
-
-                <!-- Input box for for NASDAQ stocks -->
-                <form class="w-full max-w-sm">
-                    <label for="nasdaq-ticker-inoput">NASDAQ</label
+        <!-- <form class="w-full max-w-sm">
+          <label for="stock-profile-input">Enter a stock for company profile:</label>
+          <div class="flex items-center border-teal-500 py-2">
+            <input
+              class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="text"
+              placeholder="Enter a stock symbol..."
+              aria-label="Full name"
+              id="stock-profile-input"
+            />
+            <button
+              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded"
+              id="stock-profile-searchBtn"
+              type="button"
             >
             <div class="flex items-center border-teal-500 py-2">
               <input
@@ -62,7 +100,7 @@
             <p id="nasdaq-ticker" style="display: none"></p>
           </form>
             </fieldset>
-        <!-- Input box for ticker search -->
+            Input box for ticker search -->
         <form class="w-full max-w-sm labelTicker" style="margin-top: 10px">
           <label for="stock-profile-input">Search for stocks:</label>
                     <div class="flex items-center border-teal-500 py-2">
