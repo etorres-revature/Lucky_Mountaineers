@@ -326,8 +326,6 @@ function getQuote(hybrid) {
 //function to get new chart data based on user input
 //get chart info function
 function getChartInfo(miniVan) {
-<<<<<<< HEAD
-<<<<<<< Updated upstream
     //setting search URL based on user input
     let searchChartURL = baseChartURL + miniVan;
     //ajax call to GET information from API 
@@ -368,9 +366,7 @@ function getChartInfo(miniVan) {
         //running the funciton to update chart 
         setChartData(chart, labels, dataset);
     });
-=======
-=======
->>>>>>> 5a96272899d67d05529f1799c3c605898563adc0
+
   //setting search URL based on user input
   let searchChartURL = baseChartURL + miniVan;
   //ajax call to GET information from API
@@ -379,17 +375,10 @@ function getChartInfo(miniVan) {
     method: "GET",
     //JS promise to complete after AJAX call comes back
   }).then(function (chartData) {
-<<<<<<< HEAD
-    console.log(chartData);
-    //taking the returned object and pulling out the needed values into an object
-    let timeSeries = chartData["Monthly Time Series"];
-    console.log("timeSeries", timeSeries);
-=======
     // console.log(chartData);
     //taking the returned object and pulling out the needed values into an object
     let timeSeries = chartData["Monthly Time Series"];
     // console.log("timeSeries", timeSeries);
->>>>>>> 5a96272899d67d05529f1799c3c605898563adc0
     //setting an empty array to hold the results of the for loop below
     let result = [];
     //using for in to create an array of keys and values in the empy array
@@ -398,11 +387,7 @@ function getChartInfo(miniVan) {
     }
     //using the slice method to make the array only the values for the past 12 months
     var newResult = result.slice(0, 12);
-<<<<<<< HEAD
-    console.log("result", newResult);
-=======
     // console.log("result", newResult);
->>>>>>> 5a96272899d67d05529f1799c3c605898563adc0
 
     //creating empty arrays to populate information into placeholderData with new information for company selected through user input
     let labels = [];
@@ -413,13 +398,8 @@ function getChartInfo(miniVan) {
       let chartDate = newResult[i][0];
       //taking object array value(price) and putting into the y axis
       let chartPrice = newResult[i][1];
-<<<<<<< HEAD
-      console.log(chartDate);
-      console.log(chartPrice);
-=======
       // console.log(chartDate);
       // console.log(chartPrice);
->>>>>>> 5a96272899d67d05529f1799c3c605898563adc0
       //adding each to the begining of the array to invert the order so the chart goes from oldest date to newest
       labels.unshift(chartDate);
       dataset.unshift(chartPrice);
@@ -427,10 +407,6 @@ function getChartInfo(miniVan) {
     //running the funciton to update chart
     setChartData(chart, labels, dataset);
   });
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> 5a96272899d67d05529f1799c3c605898563adc0
 }
 
 //funciton to update chart - big ups to Tariq for helping us with this aspect
