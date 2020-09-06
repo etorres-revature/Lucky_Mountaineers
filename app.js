@@ -244,6 +244,7 @@ function getQuote(hybrid) {
 //function to get new chart data based on user input
 //get chart info function
 function getChartInfo(miniVan) {
+<<<<<<< Updated upstream
     //setting search URL based on user input
     let searchChartURL = baseChartURL + miniVan;
     //ajax call to GET information from API 
@@ -284,6 +285,48 @@ function getChartInfo(miniVan) {
         //running the funciton to update chart 
         setChartData(chart, labels, dataset);
     });
+=======
+  //setting search URL based on user input
+  let searchChartURL = baseChartURL + miniVan;
+  //ajax call to GET information from API
+  $.ajax({
+    url: searchChartURL,
+    method: "GET",
+    //JS promise to complete after AJAX call comes back
+  }).then(function (chartData) {
+    console.log(chartData);
+    //taking the returned object and pulling out the needed values into an object
+    let timeSeries = chartData["Monthly Time Series"];
+    console.log("timeSeries", timeSeries);
+    //setting an empty array to hold the results of the for loop below
+    let result = [];
+    //using for in to create an array of keys and values in the empy array
+    for (var i in timeSeries) {
+      result.push([i, timeSeries[i]["4. close"]]);
+    }
+    //using the slice method to make the array only the values for the past 12 months
+    var newResult = result.slice(0, 12);
+    console.log("result", newResult);
+
+    //creating empty arrays to populate information into placeholderData with new information for company selected through user input
+    let labels = [];
+    let dataset = [];
+    //for loop to take data from the 12 input long array and put it into the appropriate array for x and y axis of chart
+    for (var i = 0; i < newResult.length; i++) {
+      //taking object array key(date) and putting into the x axis
+      let chartDate = newResult[i][0];
+      //taking object array value(price) and putting into the y axis
+      let chartPrice = newResult[i][1];
+      console.log(chartDate);
+      console.log(chartPrice);
+      //adding each to the begining of the array to invert the order so the chart goes from oldest date to newest
+      labels.unshift(chartDate);
+      dataset.unshift(chartPrice);
+    }
+    //running the funciton to update chart
+    setChartData(chart, labels, dataset);
+  });
+>>>>>>> Stashed changes
 }
 
 //funciton to update chart - big ups to Tariq for helping us with this aspect
