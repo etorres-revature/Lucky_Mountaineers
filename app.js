@@ -138,7 +138,15 @@ function getNYSETickerSymbol(truck) {
     //setting ticker variable for use in app
     ticker = nyseTickerData[0].symbol;
     console.log(ticker);
-    $("#nyse-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "red");
+    $("#nyse-ticker")
+      .text("Your ticker is: " + ticker)
+      .css("display", "block")
+      .css("background", "red");
+
+    getProfile(ticker);
+    getQuote(ticker);
+    getChartInfo(ticker);
+    getStockNews();
   });
 }
 
@@ -157,7 +165,15 @@ function getNASDAQTickerSymbol(truck) {
     //setting ticker variable for use in app
     ticker = nasdaqTickerData[0].symbol;
     console.log(ticker);
-    $("#nasdaq-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "red");
+    $("#nasdaq-ticker")
+      .text("Your ticker is: " + ticker)
+      .css("display", "block")
+      .css("background", "red");
+
+      getProfile(ticker);
+      getQuote(ticker);
+      getChartInfo(ticker);
+      getStockNews();
   });
 }
 
@@ -326,47 +342,6 @@ function getQuote(hybrid) {
 //function to get new chart data based on user input
 //get chart info function
 function getChartInfo(miniVan) {
-    //setting search URL based on user input
-    let searchChartURL = baseChartURL + miniVan;
-    //ajax call to GET information from API 
-    $.ajax({
-        url: searchChartURL,
-        method: "GET",
-        //JS promise to complete after AJAX call comes back
-    }).then(function(chartData) {
-        // console.log(chartData);
-        //taking the returned object and pulling out the needed values into an object
-        let timeSeries = chartData["Monthly Time Series"];
-        // console.log("timeSeries", timeSeries);
-        //setting an empty array to hold the results of the for loop below
-        let result = [];
-        //using for in to create an array of keys and values in the empy array
-        for (var i in timeSeries) {
-            result.push([i, timeSeries[i]["4. close"]]);
-        }
-        //using the slice method to make the array only the values for the past 12 months
-        var newResult = result.slice(0, 12);
-        // console.log("result", newResult);
-
-        //creating empty arrays to populate information into placeholderData with new information for company selected through user input
-        let labels = [];
-        let dataset = [];
-        //for loop to take data from the 12 input long array and put it into the appropriate array for x and y axis of chart
-        for (var i = 0; i < newResult.length; i++) {
-            //taking object array key(date) and putting into the x axis
-            let chartDate = newResult[i][0];
-            //taking object array value(price) and putting into the y axis
-            let chartPrice = newResult[i][1];
-            // console.log(chartDate);
-            // console.log(chartPrice);
-            //adding each to the begining of the array to invert the order so the chart goes from oldest date to newest
-            labels.unshift(chartDate);
-            dataset.unshift(chartPrice);
-        }
-        //running the funciton to update chart 
-        setChartData(chart, labels, dataset);
-    });
-
   //setting search URL based on user input
   let searchChartURL = baseChartURL + miniVan;
   //ajax call to GET information from API
@@ -514,19 +489,19 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
 
 //click function to search for user input stock symbol
 //company search click event
-$("#stock-profile-searchBtn").on("click", function () {
+// $("#stock-profile-searchBtn").on("click", function () {
   //preventing defautl action of button
-  event.preventDefault();
+  // event.preventDefault();
   //setting ticker to the value input bgy the user
-  ticker = $("#stock-profile-input").val().trim();
+  // ticker = $("#stock-profile-input").val().trim();
   //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
-  ticker - ticker.split(" ").join("_");
+  // ticker - ticker.split(" ").join("_");
   //running function to get profile information of user selected company
-  getProfile(ticker);
+  // getProfile(ticker);
   //running function to get current price information of user selected company
-  getQuote(ticker);
+  // getQuote(ticker);
   //running function to update chart with historical price/date information to update chart to user selected company
-  getChartInfo(ticker);
+  // getChartInfo(ticker);
   //getting latest stock news and displaying on screen
-  getStockNews();
-});
+//   getStockNews();
+// });
