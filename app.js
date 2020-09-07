@@ -203,6 +203,7 @@ function getProfile(car) {
     ratioPE = profileData.PERatio;
     // console.log("Profits/Earnings ratio = ", ratioPE);
     marketCap = profileData.MarketCapitalization;
+    marketCap = parseInt(marketCap).toLocaleString();
     // console.log("Market Cap is ", marketCap);
     lastDividendAmount = profileData.DividendPerShare;
     // console.log("amount of last dividend", lastDividendAmount);
@@ -220,86 +221,27 @@ function getProfile(car) {
     let companyDiv = $("#company-info");
     companyDiv.append("<p>", companyDescription);
     //adding information from this ajax call to front-end
-    $("#left-ul").append("<li>Company Name: " + companyName + "</li>");
-    $("#right-ul").append("<li>Market Sector: " + marketSector + "</li>");
-    $("#right-ul").append("<li>Exchange: " + exchange.toUpperCase() + "</li>");
-    $("#right-ul").append("<li>Market Capitalization: " + marketCap + "</li>");
-    $("#right-ul").append("<li>BETA: " + beta + "</li>");
-    $("#right-ul").append("<li>52 week low: $" + _52WeekLow + "</li>");
-    $("#right-ul").append("<li>52 week high: $" + _52WeekHigh + "</li>");
+    $("#left-ul").append(`<li>Company Name: ${companyName}</li>`);
+    $("#right-ul").append(`<li>Market Sector: ${marketSector}</li>`);
+    $("#right-ul").append(`<li>Exchange: ${exchange.toUpperCase()}</li>`);
+    $("#right-ul").append(`<li>Market Capitalization: $${marketCap}</li>`);
+    $("#right-ul").append(`<li>BETA: ${beta}</li>`);
+    $("#right-ul").append(`<li>52 week low: $${_52WeekLow}</li>`);
+    $("#right-ul").append(`<li>52 week high: $${_52WeekHigh}</li>`);
 
     // we don't put $ sign if no dividend
     if (isNaN()) {
       $("#right-ul").append(
-        "<li>Last dividend amount per share: " + lastDividendAmount + "</li>"
+        `<li>Last dividend amount per share: ${lastDividendAmount}</li>`
       );
     } else {
       $("#right-ul").append(
-        "<li>Last dividend amount per share: $" + lastDividendAmount + "</li>"
+        `<li>Last dividend amount per share: $${lastDividendAmount}</li>`
       );
     }
 
     $("#right-ul").append(
-      "<li>Last dividend date: " + lastDividendDate + "</li>"
-    );
-  });
-}
-
-//get quote function
-//functionto get current price and other information for selected stock
-function getQuote(hybrid) {
-  clearData();
-  //setting search URL based on user input
-  let searchProfileURL = baseProfileURL + car;
-  // console.log("this is the URL to search for profile", searchProfileURL);
-  //ajax call to GET company profile from search URL
-  $.ajax({
-    url: searchProfileURL,
-    method: "GET",
-    //JS promise to complete after ajax call comes back
-  }).then(function (profileData) {
-    //pulling values out of the returned object and putting them in global variables to populate the front-end elements
-    // console.log(profileData);
-    companyName = profileData.Name;
-    // console.log(companyName, "is the company");
-    companyDescription = profileData.Description;
-    // console.log("this is the description", companyDescription);
-    exchange = profileData.Exchange;
-    // console.log("traded on ", exchange);
-    marketSector = profileData.Sector;
-    // console.log("market sector =", marketSector);
-    ratioPE = profileData.PERatio;
-    // console.log("Profits/Earnings ratio = ", ratioPE);
-    marketCap = profileData.MarketCapitalization;
-    // console.log("Market Cap is ", marketCap);
-    lastDividendAmount = profileData.DividendPerShare;
-    // console.log("amount of last dividend", lastDividendAmount);
-    lastDividendDate = profileData.DividendDate;
-    // console.log("last divdend on", lastDividendDate);
-    beta = profileData.Beta;
-    // console.log(companyName + " beta", beta);
-    _200DayAvg = profileData["200DayMovingAverage"];
-    // console.log("200 day average", _200DayAvg);
-    _52WeekLow = profileData["52WeekLow"];
-    // console.log("52 week low: " + _52WeekLow);
-    _52WeekHigh = profileData["52WeekHigh"];
-    // console.log("52 week high: " + _52WeekHigh);
-    //putting the company description in the div
-    let companyDiv = $("#company-info");
-    companyDiv.append("<p>", companyDescription);
-    //adding information from this ajax call to front-end
-    $("#left-ul").append("<li>Company Name: " + companyName + "</li>");
-    $("#right-ul").append("<li>Market Sector: " + marketSector + "</li>");
-    $("#right-ul").append("<li>Exchange: " + exchange.toUpperCase() + "</li>");
-    $("#right-ul").append("<li>Market Capitalization: " + marketCap + "</li>");
-    $("#right-ul").append("<li>BETA: " + beta + "</li>");
-    $("#right-ul").append("<li>52 week low: $" + _52WeekLow + "</li>");
-    $("#right-ul").append("<li>52 week high: $" + _52WeekHigh + "</li>");
-    $("#right-ul").append(
-      "<li>Last dividend amount per share: $" + lastDividendAmount + "</li>"
-    );
-    $("#right-ul").append(
-      "<li>Last dividend date: " + lastDividendDate + "</li>"
+      `<li>Last dividend date: ${lastDividendDate}</li>`
     );
   });
 }
@@ -319,6 +261,7 @@ function getQuote(hybrid) {
     //pulling values out of the returned object and putting them in global variables to populate the front-end elements
     // console.log(quoteData);
     price = quoteData["Global Quote"]["05. price"];
+    price = parseFloat(price).toFixed(2);
     // console.log("Price is " + price);
     changePercent = quoteData["Global Quote"]["10. change percent"];
     // console.log("change percent", changePercent);
@@ -329,24 +272,27 @@ function getQuote(hybrid) {
     prevClose = quoteData["Global Quote"]["08. previous close"];
     // console.log("previous trading close");
     dailyHigh = quoteData["Global Quote"]["03. high"];
+    dailyHigh = parseFloat(dailyHigh).toFixed(2);
     // console.log("daily trading high", dailyHigh);
     dailyLow = quoteData["Global Quote"]["04. low"];
+    dailyLow = parseFloat(dailyLow).toFixed(2);
     // console.log("daily trading low", dailyLow);
     dailyVolume = quoteData["Global Quote"]["06. volume"];
+    dailyVolume = parseInt(dailyVolume).toLocaleString()
     // console.log("volume for day" + dailyVolume);
     lastTradingDay = quoteData["Global Quote"]["07. latest trading day"];
     // console.log("last trading day", lastTradingDay);
 
     //adding information from this ajax call to front-end
 
+    $("#left-ul").append(`<li> Price: $${price}</li>`)
+
     // change of color green/red depending on the move
     $("#left-ul").append(
-      "<li>Change: <span class='changeOfColor'>" + changeValue + "</span></li>"
+      `<li>Change: <span class='changeOfColor'>${changeValue}</span></li>`
     );
     $("#left-ul").append(
-      "<li>Change: <span class='changeOfColor'>" +
-        changePercent +
-        "</span></li>"
+      `<li>Change: <span class='changeOfColor'>${changePercent}</span></li>`
     );
 
     if (changeValue < 0) {
@@ -357,10 +303,10 @@ function getQuote(hybrid) {
       $(".changeOfColor").attr("style", "color: green");
     }
 
-    $("#left-ul").append("<li>Daily low: $" + dailyLow + "</li>");
-    $("#left-ul").append("<li>Daily high: $" + dailyHigh + "</li>");
-    $("#left-ul").append("<li>Daily volume: " + dailyVolume + "</li>");
-    $("#left-ul").append("<li>Last trading date: " + lastTradingDay + "</li>");
+    $("#left-ul").append(`<li>Daily low: $${dailyLow}</li>`);
+    $("#left-ul").append(`<li>Daily high: $${dailyHigh}</li>`);
+    $("#left-ul").append(`<li>Daily volume: ${dailyVolume}</li>`);
+    $("#left-ul").append(`<li>Last trading date: ${lastTradingDay}</li>`);
   });
 }
 
@@ -460,17 +406,13 @@ function getStockNews() {
       // console.log(publicationURL);
       //jQuery appending title, date, and publication to dummy html elements to see how display looks
       divStockNews.append(
-        "<p id=publication-date>" + newPublicationDate + "</p>"
+        `<p id=publication-date>${newPublicationDate}</p>`
       );
       divStockNews.append(
-        "<p id=pubication-title>" + publicationTitle + "</p>"
+        `<p id=pubication-title>${publicationTitle}</p>`
       );
       divStockNews.append(
-        "<a id=publication-URL href=" +
-          publicationURL +
-          ">" +
-          publicationURL +
-          "</a>"
+        `<a id=publication-URL href=${publicationURL}>${publicationURL}</a>`
       );
       //adding an hr below each entry for style.
       divStockNews.append("<hr>");
