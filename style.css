@@ -31,11 +31,10 @@ fieldset {
 }
 
 header {
-    height: 45px;
-    width: 85%;
-    margin: auto;
-
-    background-color: palevioletred;
+    height: 50px;
+    width: 100%;
+    background-color: slategrey;
+    color: snow;
 }
 
 h1 {
