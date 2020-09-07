@@ -11,11 +11,11 @@ body {
 }
 
 form {
-    background: #fff;
+    background: oldlace;
 }
 
 fieldset {
-    background: #fff;
+    background: palegoldenrod;
 }
 
 #chart {
@@ -23,11 +23,23 @@ fieldset {
 }
 
 .stockInfo {
-    background: gray;
+    background: lightgray;
 }
 
 #stock-news {
     background: burlywood
+}
+
+header {
+    height: 45px;
+    width: 85%;
+    margin: auto;
+
+    background-color: palevioletred;
+}
+
+h1 {
+    margin: 0;
 }
 
 /* what does it do? */
@@ -78,18 +90,17 @@ fieldset {
 /* all secondary titles bold and 20px in size (company profile, stock information and stock news) */
 
 h4,
-legend,
+h2,
 .labelTicker {
     font-weight: bold;
     font-size: 20px;
 }
 
-
 /* margin to the left for all the info above input boxes */
 
-label {
-    margin-left: 10px;
-}
+ label {
+    margin: 0px;
+ } 
 
 a {
     color: slateblue;
@@ -100,7 +111,7 @@ a {
 
 .stockInfo::after {
     content: "";
-    background: url(Background.png);
+    /* background: url(Background.png); */
     opacity: 0.2;
     top: 0;
     left: 0;
