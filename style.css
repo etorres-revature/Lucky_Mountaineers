@@ -6,6 +6,29 @@ div#chart {
     width: 100%;
 }
 
+body {
+    background: coral;
+}
+
+form {
+    background: #fff;
+}
+
+fieldset {
+    background: #fff;
+}
+
+#chart {
+    background:peachpuff;
+}
+
+.stockInfo {
+    background: gray;
+}
+
+#stock-news {
+    background: burlywood
+}
 
 /* what does it do? */
 
@@ -32,7 +55,6 @@ input {
 #nasdaq-ticker-input,
 #stock-profile-input {
     border: 1px solid #ccc;
-    margin-left: 10px;
 }
 
 
