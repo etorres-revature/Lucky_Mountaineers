@@ -72,9 +72,9 @@ input {
 
 /* border on specific ticker searches */
 
-fieldset {
+/* fieldset {
     border: 1px solid #000;
-}
+} */
 
 
 /* what does it do? */
@@ -94,6 +94,7 @@ h2,
 .labelTicker {
     font-weight: bold;
     font-size: 20px;
+    margin: 10px;
 }
 
 /* margin to the left for all the info above input boxes */
