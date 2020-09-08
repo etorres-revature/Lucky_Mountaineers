@@ -140,10 +140,10 @@ function getNYSETickerSymbol(truck) {
     //setting ticker variable for use in app
     ticker = nyseTickerData[0].symbol;
     // console.log(ticker);
-      //putting the space back into company and putting it to upper case letters for display on screen
+    //putting the space back into company and putting it to upper case letters for display on screen
     company = company.split("_").join(" ").toUpperCase();
     $("#nyse-ticker")
-      .text(company+"'s ticker symbol: " + ticker)
+      .text(company + "'s ticker symbol: " + ticker)
       .css("display", "block")
       .css("background", "red");
 
@@ -172,7 +172,7 @@ function getNASDAQTickerSymbol(truck) {
     //putting the space back into company and putting it to upper case letters for display on screen
     company = company.split("_").join(" ").toUpperCase();
     $("#nasdaq-ticker")
-      .text(company+"'s ticker symbol: " + ticker)
+      .text(company + "'s ticker symbol: " + ticker)
       .css("display", "block")
       .css("background", "red");
 
@@ -246,9 +246,7 @@ function getProfile(car) {
       );
     }
 
-    $("#right-ul").append(
-      `<li>Last dividend date: ${lastDividendDate}</li>`
-    );
+    $("#right-ul").append(`<li>Last dividend date: ${lastDividendDate}</li>`);
   });
 }
 
@@ -270,8 +268,10 @@ function getQuote(hybrid) {
     price = parseFloat(price).toFixed(2);
     // console.log("Price is " + price);
     changePercent = quoteData["Global Quote"]["10. change percent"];
+    changePercent = parseFloat(changePercent).toFixed(2);
     // console.log("change percent", changePercent);
     changeValue = quoteData["Global Quote"]["09. change"];
+    changeValue = parseFloat(changeValue).toFixed(2);
     // console.log("absolute change", changeValue);
     dailyOpen = quoteData["Global Quote"]["02. open"];
     // console.log("daily trading open " + dailyOpen);
@@ -284,14 +284,14 @@ function getQuote(hybrid) {
     dailyLow = parseFloat(dailyLow).toFixed(2);
     // console.log("daily trading low", dailyLow);
     dailyVolume = quoteData["Global Quote"]["06. volume"];
-    dailyVolume = parseInt(dailyVolume).toLocaleString()
+    dailyVolume = parseInt(dailyVolume).toLocaleString();
     // console.log("volume for day" + dailyVolume);
     lastTradingDay = quoteData["Global Quote"]["07. latest trading day"];
     // console.log("last trading day", lastTradingDay);
 
     //adding information from this ajax call to front-end
 
-    $("#left-ul").append(`<li> Price: $${price}</li>`)
+    $("#left-ul").append(`<li> Price: $${price}</li>`);
 
     // change of color green/red depending on the move
     $("#left-ul").append(
@@ -412,12 +412,8 @@ function getStockNews() {
       let publicationURL = newsData.news[i].url;
       // console.log(publicationURL);
       //jQuery appending title, date, and publication to dummy html elements to see how display looks
-      divStockNews.append(
-        `<p id=publication-date>${newPublicationDate}</p>`
-      );
-      divStockNews.append(
-        `<p id=pubication-title>${publicationTitle}</p>`
-      );
+      divStockNews.append(`<p id=publication-date>${newPublicationDate}</p>`);
+      divStockNews.append(`<p id=pubication-title>${publicationTitle}</p>`);
       divStockNews.append(
         `<a id=publication-URL href=${publicationURL}>${publicationURL}</a>`
       );
@@ -441,7 +437,7 @@ function clearData() {
 $("#nyse-ticker-searchBtn").on("click", function () {
   //preventing default action of button
   event.preventDefault();
-  
+
   //setting company to the value input by the user
   company = $("#nyse-ticker-input").val().trim();
   //splitting company at any spaces and joining back with an underscore because URL will not accept spaces
@@ -450,7 +446,10 @@ $("#nyse-ticker-searchBtn").on("click", function () {
   //sending company to search for ticker symbol
   getNYSETickerSymbol(company);
   $("#nyse-ticker-input").val("");
-  $("#nyse-ticker-input").attr("placeholder", "Enter company traded on NYSE...");
+  $("#nyse-ticker-input").attr(
+    "placeholder",
+    "Enter company traded on NYSE..."
+  );
 });
 
 //click function to search for NASDAQ stock symbols
@@ -466,19 +465,22 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
   //sending company to search for ticker symbol
   getNASDAQTickerSymbol(company);
   $("#nasdaq-ticker-input").val("");
-  $("#nasdaq-ticker-input").attr("placeholder", "Enter company traded on NYSE...");
+  $("#nasdaq-ticker-input").attr(
+    "placeholder",
+    "Enter company traded on NYSE..."
+  );
 });
 
 //clear search button
-$("#clear-search-btn").on("click", () =>{
+$("#clear-search-btn").on("click", () => {
   $("#company-profile").empty();
   clearChartData(chart);
-$("#right-ul").empty();
-$("#left-ul").empty()
-$("#stock-news").empty();  
-$("#nyse-ticker").hide();
-$("#nasdaq-ticker").hide();
-})
+  $("#right-ul").empty();
+  $("#left-ul").empty();
+  $("#stock-news").empty();
+  $("#nyse-ticker").hide();
+  $("#nasdaq-ticker").hide();
+});
 //click function to search for user input stock symbol
 //company search click event
 // $("#stock-profile-searchBtn").on("click", function () {
