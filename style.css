@@ -22,11 +22,11 @@ fieldset {
     background:peachpuff;
 }
 
-.stockInfo {
+section {
     background: lightgray;
 }
 
-#stock-news {
+.container.mx-auto {
     background: burlywood
 }
 

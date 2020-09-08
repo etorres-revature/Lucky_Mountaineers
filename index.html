@@ -35,7 +35,7 @@
               id="nyse-ticker-input"
             />
             <button
-              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded"
+              class="bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded"
               id="nyse-ticker-searchBtn"
               type="button"
             >
@@ -46,7 +46,7 @@
         </form>
 
         <form class="w-full px-5 pb-5 pt-1">
-          <label for="nasdaq-ticker-inoput"
+          <label for="nasdaq-ticker-input"
             >Enter a company to find ticker symbol (NASDAQ only)</label
           >
           <div class="flex items-center border-teal-500 py-2">
@@ -58,7 +58,7 @@
               id="nasdaq-ticker-input"
             />
             <button
-              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded"
+              class="bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded"
               id="nasdaq-ticker-searchBtn"
               type="button"
             >
@@ -66,6 +66,17 @@
             </button>
           </div>
           <p id="nasdaq-ticker" style="display: none"></p>
+        </form>
+
+        <form class="w-full px-5 pb-5 pt-1 block">
+          <label for="clear-search-btn"
+            >Click to clear screen:</label
+          >
+          <div class="flex text-center border-teal-500 py-2">
+        <button class="bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-lg border-4 text-white py-1 px-2 rounded"
+        id="clear-search-btn"
+        type="button">Clear Search</button>
+        </div>
         </form>
 
         <!-- <form class="w-full max-w-sm">
@@ -117,12 +128,12 @@
 
         <!-- company profile is put below -->
         <!-- <div class="w-2/3 h-auto flex-auto"> -->
-            <fieldset class=" w-2/3 h-auto border-green-400 mx-3">
+            <fieldset  class="w-2/3 h-auto border-green-400 mx-3">
                 <h2>Company profile</h2>
                 <hr style="margin: 0px 50px 0px 10px; border: 1px solid tomato; border-radius: 5px"></hr>
                 <!-- <h4 style="margin: 10px">Company profile</h4> -->
                 <!-- <hr style="margin: 0px 50px 0px 10px"></hr> -->
-                <div style="white-space: pre-wrap; margin: 10px" id="company-info"></div>
+                <div id="company-profile" style="white-space: pre-wrap; margin: 10px" id="company-info"></div>
             </fieldset>
         <!-- </div> -->
     </div>
@@ -138,10 +149,10 @@
         </div>
 
         <!-- stock data -->
-        <div style="margin: 10px;" class="stockInfo w-1/2 h-auto border border-green-400">
+        <section style="margin: 10px;" class="w-1/2 h-auto border border-green-400">
             <h4 style="margin: 10px">Stock Information</h4>
             <hr style="margin: 0px 50px 0px 10px; border: 1px solid tomato; border-radius: 5px"></hr>
-            <div class="flex">
+            <div id="stock-info" class="flex">
                 <!-- info list on the left of the div -->
                 <div class="w-1/2 h-auto flex-auto">
                     <ul style="margin: 10px" id="left-ul"></ul>
@@ -151,14 +162,15 @@
                     <ul style="margin: 10px" id="right-ul"></ul>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 
     <!-- stock news go below -->
     <div class="container mx-auto">
-        <h4 class="w-full" id="stock-news">Stock News</h4>
+        <h4 class="w-full">Stock News</h4>
         <hr style="margin: 10px 50px 10px 10px; border: 1px solid tomato; border-radius: 5px"></hr>
-    </div>
+    <div id="stock-news"></div>
+      </div>
 
     <!-- chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>

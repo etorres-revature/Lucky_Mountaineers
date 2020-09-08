@@ -224,7 +224,7 @@ function getProfile(car) {
     _52WeekHigh = profileData["52WeekHigh"];
     // console.log("52 week high: " + _52WeekHigh);
     //putting the company description in the div
-    let companyDiv = $("#company-info");
+    let companyDiv = $("#company-profile");
     companyDiv.append("<p>", companyDescription);
     //adding information from this ajax call to front-end
     $("#left-ul").append(`<li>Company Name: ${companyName}</li>`);
@@ -379,6 +379,7 @@ function clearChartData(chart) {
   chart.data.datasets.forEach(function (dataset) {
     dataset.data = [];
   });
+  chart.data.datasets[0].label = "";
   chart.update();
 }
 
@@ -466,6 +467,15 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
   $("#nasdaq-ticker-input").attr("placeholder", "Enter company traded on NYSE...");
 });
 
+//clear search button
+$("#clear-search-btn").on("click", () =>{
+  $("#company-profile").empty();
+  clearChartData(chart);
+$("#stock-info").empty();
+$("#stock-news").empty();  
+$("#nyse-ticker").hide();
+$("#nasdaq-ticker").hide();
+})
 //click function to search for user input stock symbol
 //company search click event
 // $("#stock-profile-searchBtn").on("click", function () {
