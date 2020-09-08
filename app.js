@@ -471,7 +471,8 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
 $("#clear-search-btn").on("click", () =>{
   $("#company-profile").empty();
   clearChartData(chart);
-$("#stock-info").empty();
+$("#right-ul").empty();
+$("#left-ul").empty()
 $("#stock-news").empty();  
 $("#nyse-ticker").hide();
 $("#nasdaq-ticker").hide();
