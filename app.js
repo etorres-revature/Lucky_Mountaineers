@@ -432,6 +432,8 @@ function clearData() {
   $("#left-ul").empty();
   $("#right-ul").empty();
   $(".changeOfColor").empty();
+  $("#company-profile").empty();
+  $("#stock-news").empty();
 }
 
 //click function to search for NYSE stock symbols

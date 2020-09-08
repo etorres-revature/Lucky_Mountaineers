@@ -1,4 +1,4 @@
-# [Lucky_Spiders](https://etorres-revature.github.io/Lucky_Mountaineers/)
+# [PORTFOLIO EDGE APP](https://etorres-revature.github.io/Lucky_Mountaineers/)
 
 https://etorres-revature.github.io/Lucky_Mountaineers/
 
