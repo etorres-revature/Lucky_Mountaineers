@@ -143,7 +143,7 @@ Contact: etorresnotary@gmail.com.
 
 #### License
 
-GPL - 3.0
+GNU General Public License - 3.0
 
 <a name="footnote1">[footnote 1:  5 Reasons to Invest in the Stock Market](https://money.usnews.com/investing/articles/2017-04-12/5-reasons-to-invest-in-the-stock-market)</a>
 
