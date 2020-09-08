@@ -40,8 +40,10 @@ const baseNewsURL =
   "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
 
 //setting global variables
-
+//variable to hold exchange ticker symbol
 let ticker = "";
+//variable to hold company name
+let company = "";
 
 //global variable for getProfile AJAX call
 let companyName = "";
@@ -137,8 +139,18 @@ function getNYSETickerSymbol(truck) {
     // console.log(nyseTickerData);
     //setting ticker variable for use in app
     ticker = nyseTickerData[0].symbol;
-    console.log(ticker);
-    $("#nyse-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "orangered");
+    // console.log(ticker);
+      //putting the space back into company and putting it to upper case letters for display on screen
+    company = company.split("_").join(" ").toUpperCase();
+    $("#nyse-ticker")
+      .text(company+"'s ticker symbol: " + ticker)
+      .css("display", "block")
+      .css("background", "red");
+
+    getProfile(ticker);
+    getQuote(ticker);
+    getChartInfo(ticker);
+    getStockNews();
   });
 }
 
@@ -156,8 +168,18 @@ function getNASDAQTickerSymbol(truck) {
     // console.log(nasdaqTickerData);
     //setting ticker variable for use in app
     ticker = nasdaqTickerData[0].symbol;
-    console.log(ticker);
-    $("#nasdaq-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "orangered");
+    // console.log(ticker);
+    //putting the space back into company and putting it to upper case letters for display on screen
+    company = company.split("_").join(" ").toUpperCase();
+    $("#nasdaq-ticker")
+      .text(company+"'s ticker symbol: " + ticker)
+      .css("display", "block")
+      .css("background", "red");
+
+    getProfile(ticker);
+    getQuote(ticker);
+    getChartInfo(ticker);
+    getStockNews();
   });
 }
 
@@ -187,6 +209,7 @@ function getProfile(car) {
     ratioPE = profileData.PERatio;
     // console.log("Profits/Earnings ratio = ", ratioPE);
     marketCap = profileData.MarketCapitalization;
+    marketCap = parseInt(marketCap).toLocaleString();
     // console.log("Market Cap is ", marketCap);
     lastDividendAmount = profileData.DividendPerShare;
     // console.log("amount of last dividend", lastDividendAmount);
@@ -201,80 +224,30 @@ function getProfile(car) {
     _52WeekHigh = profileData["52WeekHigh"];
     // console.log("52 week high: " + _52WeekHigh);
     //putting the company description in the div
-    let companyDiv = $("#company-info");
+    let companyDiv = $("#company-profile");
     companyDiv.append("<p>", companyDescription);
     //adding information from this ajax call to front-end
-    $("#left-ul").append("<li>Company Name: " + companyName + "</li>");
-    $("#right-ul").append("<li>Market Sector: " + marketSector + "</li>");
-    $("#right-ul").append("<li>Exchange: " + exchange.toUpperCase() + "</li>");
-    $("#right-ul").append("<li>Market Capitalization: " + marketCap + "</li>");
-    $("#right-ul").append("<li>BETA: " + beta + "</li>");
-    $("#right-ul").append("<li>52 week low: $" + _52WeekLow + "</li>");
-    $("#right-ul").append("<li>52 week high: $" + _52WeekHigh + "</li>");
-    $("#right-ul").append(
-      "<li>Last dividend amount per share: $" + lastDividendAmount + "</li>"
-    );
-    $("#right-ul").append(
-      "<li>Last dividend date: " + lastDividendDate + "</li>"
-    );
-  });
-}
+    $("#left-ul").append(`<li>Company Name: ${companyName}</li>`);
+    $("#right-ul").append(`<li>Market Sector: ${marketSector}</li>`);
+    $("#right-ul").append(`<li>Exchange: ${exchange.toUpperCase()}</li>`);
+    $("#right-ul").append(`<li>Market Capitalization: $${marketCap}</li>`);
+    $("#right-ul").append(`<li>BETA: ${beta}</li>`);
+    $("#right-ul").append(`<li>52 week low: $${_52WeekLow}</li>`);
+    $("#right-ul").append(`<li>52 week high: $${_52WeekHigh}</li>`);
 
-//get quote function
-//functionto get current price and other information for selected stock
-function getQuote(hybrid) {
-  clearData();
-  //setting search URL based on user input
-  let searchProfileURL = baseProfileURL + car;
-  // console.log("this is the URL to search for profile", searchProfileURL);
-  //ajax call to GET company profile from search URL
-  $.ajax({
-    url: searchProfileURL,
-    method: "GET",
-    //JS promise to complete after ajax call comes back
-  }).then(function (profileData) {
-    //pulling values out of the returned object and putting them in global variables to populate the front-end elements
-    // console.log(profileData);
-    companyName = profileData.Name;
-    // console.log(companyName, "is the company");
-    companyDescription = profileData.Description;
-    // console.log("this is the description", companyDescription);
-    exchange = profileData.Exchange;
-    // console.log("traded on ", exchange);
-    marketSector = profileData.Sector;
-    // console.log("market sector =", marketSector);
-    ratioPE = profileData.PERatio;
-    // console.log("Profits/Earnings ratio = ", ratioPE);
-    marketCap = profileData.MarketCapitalization;
-    // console.log("Market Cap is ", marketCap);
-    lastDividendAmount = profileData.DividendPerShare;
-    // console.log("amount of last dividend", lastDividendAmount);
-    lastDividendDate = profileData.DividendDate;
-    // console.log("last divdend on", lastDividendDate);
-    beta = profileData.Beta;
-    // console.log(companyName + " beta", beta);
-    _200DayAvg = profileData["200DayMovingAverage"];
-    // console.log("200 day average", _200DayAvg);
-    _52WeekLow = profileData["52WeekLow"];
-    // console.log("52 week low: " + _52WeekLow);
-    _52WeekHigh = profileData["52WeekHigh"];
-    // console.log("52 week high: " + _52WeekHigh);
-    //putting the company description in the div
-    let companyDiv = $("#company-info");
-    companyDiv.append("<p>", companyDescription);
-    //adding information from this ajax call to front-end
-    $("#left-ul").append("<li>Company Name: " + companyName + "</li>");
-    $("#right-ul").append("<li>Market Sector: " + marketSector + "</li>");
-    $("#right-ul").append("<li>Exchange: " + exchange.toUpperCase() + "</li>");
-    $("#right-ul").append("<li>Market Capitalization: " + marketCap + "</li>");
-    $("#right-ul").append("<li>BETA: " + beta + "</li>");
-    $("#right-ul").append("<li>52 week low: $" + _52WeekLow + "</li>");
-    $("#right-ul").append("<li>52 week high: $" + _52WeekHigh + "</li>");
+    // we don't put $ sign if no dividend
+    if (isNaN()) {
+      $("#right-ul").append(
+        `<li>Last dividend amount per share: ${lastDividendAmount}</li>`
+      );
+    } else {
+      $("#right-ul").append(
+        `<li>Last dividend amount per share: $${lastDividendAmount}</li>`
+      );
+    }
+
     $("#right-ul").append(
-      "<li>Last dividend amount per share: $" + lastDividendAmount + "</li>"
-    );
-    $("#right-ul").append(
-      "<li>Last dividend date: " + lastDividendDate + "</li>"
+      `<li>Last dividend date: ${lastDividendDate}</li>`
     );
   });
 }
@@ -294,6 +267,7 @@ function getQuote(hybrid) {
     //pulling values out of the returned object and putting them in global variables to populate the front-end elements
     // console.log(quoteData);
     price = quoteData["Global Quote"]["05. price"];
+    price = parseFloat(price).toFixed(2);
     // console.log("Price is " + price);
     changePercent = quoteData["Global Quote"]["10. change percent"];
     // console.log("change percent", changePercent);
@@ -304,22 +278,41 @@ function getQuote(hybrid) {
     prevClose = quoteData["Global Quote"]["08. previous close"];
     // console.log("previous trading close");
     dailyHigh = quoteData["Global Quote"]["03. high"];
+    dailyHigh = parseFloat(dailyHigh).toFixed(2);
     // console.log("daily trading high", dailyHigh);
     dailyLow = quoteData["Global Quote"]["04. low"];
+    dailyLow = parseFloat(dailyLow).toFixed(2);
     // console.log("daily trading low", dailyLow);
     dailyVolume = quoteData["Global Quote"]["06. volume"];
+    dailyVolume = parseInt(dailyVolume).toLocaleString()
     // console.log("volume for day" + dailyVolume);
     lastTradingDay = quoteData["Global Quote"]["07. latest trading day"];
     // console.log("last trading day", lastTradingDay);
 
     //adding information from this ajax call to front-end
-    $("#left-ul").append("<li>Price: $" + price + "</li>");
-    $("#left-ul").append("<li>Change: " + changeValue + "%</li>");
-    $("#left-ul").append("<li>Change percent: " + changePercent + "</li>");
-    $("#left-ul").append("<li>Daily low: $" + dailyLow + "</li>");
-    $("#left-ul").append("<li>Daily high: $" + dailyHigh + "</li>");
-    $("#left-ul").append("<li>Daily volume: " + dailyVolume + "</li>");
-    $("#left-ul").append("<li>Last trading date: " + lastTradingDay + "</li>");
+
+    $("#left-ul").append(`<li> Price: $${price}</li>`)
+
+    // change of color green/red depending on the move
+    $("#left-ul").append(
+      `<li>Change: <span class='changeOfColor'>${changeValue}</span></li>`
+    );
+    $("#left-ul").append(
+      `<li>Change: <span class='changeOfColor'>${changePercent}</span></li>`
+    );
+
+    if (changeValue < 0) {
+      console.log("going down");
+      $(".changeOfColor").attr("style", "color: red");
+    } else {
+      console.log("up");
+      $(".changeOfColor").attr("style", "color: green");
+    }
+
+    $("#left-ul").append(`<li>Daily low: $${dailyLow}</li>`);
+    $("#left-ul").append(`<li>Daily high: $${dailyHigh}</li>`);
+    $("#left-ul").append(`<li>Daily volume: ${dailyVolume}</li>`);
+    $("#left-ul").append(`<li>Last trading date: ${lastTradingDay}</li>`);
   });
 }
 
@@ -386,6 +379,7 @@ function clearChartData(chart) {
   chart.data.datasets.forEach(function (dataset) {
     dataset.data = [];
   });
+  chart.data.datasets[0].label = "";
   chart.update();
 }
 
@@ -419,17 +413,13 @@ function getStockNews() {
       // console.log(publicationURL);
       //jQuery appending title, date, and publication to dummy html elements to see how display looks
       divStockNews.append(
-        "<p id=publication-date>" + newPublicationDate + "</p>"
+        `<p id=publication-date>${newPublicationDate}</p>`
       );
       divStockNews.append(
-        "<p id=pubication-title>" + publicationTitle + "</p>"
+        `<p id=pubication-title>${publicationTitle}</p>`
       );
       divStockNews.append(
-        "<a id=publication-URL href=" +
-          publicationURL +
-          ">" +
-          publicationURL +
-          "</a>"
+        `<a id=publication-URL href=${publicationURL}>${publicationURL}</a>`
       );
       //adding an hr below each entry for style.
       divStockNews.append("<hr>");
@@ -441,6 +431,9 @@ function clearData() {
   $("#company-info").empty();
   $("#left-ul").empty();
   $("#right-ul").empty();
+  $(".changeOfColor").empty();
+  $("#company-profile").empty();
+  $("#stock-news").empty();
 }
 
 //click function to search for NYSE stock symbols
@@ -448,13 +441,16 @@ function clearData() {
 $("#nyse-ticker-searchBtn").on("click", function () {
   //preventing default action of button
   event.preventDefault();
-  //setting ticker to the value input by the user
-  ticker = $("#nyse-ticker-input").val().trim();
-  //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
-  ticker = ticker.split(" ").join("_");
-  console.log(ticker);
-  //sending ticker to search for ticker symbol
-  getNYSETickerSymbol(ticker);
+  
+  //setting company to the value input by the user
+  company = $("#nyse-ticker-input").val().trim();
+  //splitting company at any spaces and joining back with an underscore because URL will not accept spaces
+  company = company.split(" ").join("_");
+  console.log(company);
+  //sending company to search for ticker symbol
+  getNYSETickerSymbol(company);
+  $("#nyse-ticker-input").val("");
+  $("#nyse-ticker-input").attr("placeholder", "Enter company traded on NYSE...");
 });
 
 //click function to search for NASDAQ stock symbols
@@ -462,30 +458,42 @@ $("#nyse-ticker-searchBtn").on("click", function () {
 $("#nasdaq-ticker-searchBtn").on("click", function () {
   //preventing default action of button
   event.preventDefault();
-  //setting ticker to the value input by the user
-  ticker = $("#nasdaq-ticker-input").val().trim();
-  //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
-  ticker = ticker.split(" ").join("_");
-  console.log(ticker);
-  //sending ticker to search for ticker symbol
-  getNASDAQTickerSymbol(ticker);
+  //setting company to the value input by the user
+  company = $("#nasdaq-ticker-input").val().trim();
+  //splitting company at any spaces and joining back with an underscore because URL will not accept spaces
+  company = company.split(" ").join("_");
+  // console.log(company);
+  //sending company to search for ticker symbol
+  getNASDAQTickerSymbol(company);
+  $("#nasdaq-ticker-input").val("");
+  $("#nasdaq-ticker-input").attr("placeholder", "Enter company traded on NYSE...");
 });
 
+//clear search button
+$("#clear-search-btn").on("click", () =>{
+  $("#company-profile").empty();
+  clearChartData(chart);
+$("#right-ul").empty();
+$("#left-ul").empty()
+$("#stock-news").empty();  
+$("#nyse-ticker").hide();
+$("#nasdaq-ticker").hide();
+})
 //click function to search for user input stock symbol
 //company search click event
-$("#stock-profile-searchBtn").on("click", function () {
-  //preventing defautl action of button
-  event.preventDefault();
-  //setting ticker to the value input bgy the user
-  ticker = $("#stock-profile-input").val().trim();
-  //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
-  ticker - ticker.split(" ").join("_");
-  //running function to get profile information of user selected company
-  getProfile(ticker);
-  //running function to get current price information of user selected company
-  getQuote(ticker);
-  //running function to update chart with historical price/date information to update chart to user selected company
-  getChartInfo(ticker);
-  //getting latest stock news and displaying on screen
-  getStockNews();
-});
+// $("#stock-profile-searchBtn").on("click", function () {
+//preventing defautl action of button
+// event.preventDefault();
+//setting ticker to the value input bgy the user
+// ticker = $("#stock-profile-input").val().trim();
+//splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
+// ticker - ticker.split(" ").join("_");
+//running function to get profile information of user selected company
+// getProfile(ticker);
+//running function to get current price information of user selected company
+// getQuote(ticker);
+//running function to update chart with historical price/date information to update chart to user selected company
+// getChartInfo(ticker);
+//getting latest stock news and displaying on screen
+//   getStockNews();
+// });
