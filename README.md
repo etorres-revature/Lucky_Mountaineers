@@ -50,7 +50,7 @@ And then, be ready to start all over again:
 
 ***Start using [PORTFOLIO EDGE](https://etorres-revature.github.io/Lucky_Mountaineers/) today!***
 
-### Stock APIs used in PORTFOLIO EDGE
+### STOCK APIs USED IN PORTFOLIO EDGE:
 
 ## Financial Modeling Prep
 
@@ -135,7 +135,7 @@ Find out more about *Chart.js* at <a target="_blank" rel="noopener noreferrer">[
 Lucky Mountaineers
 
 * :cookie: Emmanuel Durand :cookie:
-* "gem: Toccara Hicks :gem:
+* :gem: Toccara Hicks :gem:
 * :green_heart: Eric D. Torres :green_heart:
 * :rainbow: Telicia Watson :rainbow:
 
