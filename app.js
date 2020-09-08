@@ -138,7 +138,7 @@ function getNYSETickerSymbol(truck) {
     //setting ticker variable for use in app
     ticker = nyseTickerData[0].symbol;
     console.log(ticker);
-    $("#nyse-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "red");
+    $("#nyse-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "orangered");
   });
 }
 
@@ -157,7 +157,7 @@ function getNASDAQTickerSymbol(truck) {
     //setting ticker variable for use in app
     ticker = nasdaqTickerData[0].symbol;
     console.log(ticker);
-    $("#nasdaq-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "red");
+    $("#nasdaq-ticker").text("Your ticker is: "+ticker).css("display", "block").css("background", "orangered");
   });
 }
 
