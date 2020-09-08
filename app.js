@@ -446,6 +446,8 @@ $("#nyse-ticker-searchBtn").on("click", function () {
   console.log(company);
   //sending company to search for ticker symbol
   getNYSETickerSymbol(company);
+  $("#nyse-ticker-input").val("");
+  $("#nyse-ticker-input").attr("placeholder", "Enter company traded on NYSE...");
 });
 
 //click function to search for NASDAQ stock symbols
@@ -460,6 +462,8 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
   // console.log(company);
   //sending company to search for ticker symbol
   getNASDAQTickerSymbol(company);
+  $("#nasdaq-ticker-input").val("");
+  $("#nasdaq-ticker-input").attr("placeholder", "Enter company traded on NYSE...");
 });
 
 //click function to search for user input stock symbol
