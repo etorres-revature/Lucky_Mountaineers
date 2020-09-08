@@ -40,8 +40,9 @@ const baseNewsURL =
   "https://api-v2.intrinio.com/companies/news?api_key=OjY4MGQ0M2E2NDRhMGUwOWIyNjJiNzQwMWY5ZjI3ZWE1&page_size=15";
 
 //setting global variables
-
+//variable to hold exchange ticker symbol
 let ticker = "";
+//variable to hold company name
 let company = "";
 
 //global variable for getProfile AJAX call
@@ -139,6 +140,7 @@ function getNYSETickerSymbol(truck) {
     //setting ticker variable for use in app
     ticker = nyseTickerData[0].symbol;
     // console.log(ticker);
+      //putting the space back into company and putting it to upper case letters for display on screen
     company = company.split("_").join(" ").toUpperCase();
     $("#nyse-ticker")
       .text(company+"'s ticker symbol: " + ticker)
@@ -167,6 +169,7 @@ function getNASDAQTickerSymbol(truck) {
     //setting ticker variable for use in app
     ticker = nasdaqTickerData[0].symbol;
     // console.log(ticker);
+    //putting the space back into company and putting it to upper case letters for display on screen
     company = company.split("_").join(" ").toUpperCase();
     $("#nasdaq-ticker")
       .text(company+"'s ticker symbol: " + ticker)
@@ -436,12 +439,12 @@ $("#nyse-ticker-searchBtn").on("click", function () {
   //preventing default action of button
   event.preventDefault();
   
-  //setting ticker to the value input by the user
+  //setting company to the value input by the user
   company = $("#nyse-ticker-input").val().trim();
-  //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
+  //splitting company at any spaces and joining back with an underscore because URL will not accept spaces
   company = company.split(" ").join("_");
   console.log(company);
-  //sending ticker to search for ticker symbol
+  //sending company to search for ticker symbol
   getNYSETickerSymbol(company);
 });
 
@@ -450,12 +453,12 @@ $("#nyse-ticker-searchBtn").on("click", function () {
 $("#nasdaq-ticker-searchBtn").on("click", function () {
   //preventing default action of button
   event.preventDefault();
-  //setting ticker to the value input by the user
+  //setting company to the value input by the user
   company = $("#nasdaq-ticker-input").val().trim();
-  //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
+  //splitting company at any spaces and joining back with an underscore because URL will not accept spaces
   company = company.split(" ").join("_");
-  console.log(company);
-  //sending ticker to search for ticker symbol
+  // console.log(company);
+  //sending company to search for ticker symbol
   getNASDAQTickerSymbol(company);
 });
 
