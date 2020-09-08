@@ -1,14 +1,14 @@
 # [PORTFOLIO EDGE](https://etorres-revature.github.io/Lucky_Mountaineers/) :yen: :dollar: :pound: :euro: :moneybag: :money_with_wings:
 
-Financial Freedom is one of the main goals for every working person throughout the world.  Over time the single best return on your investment can be through the purchase of publicly traded stocks.  
+Financial freedom is one of the main goals for every working person throughout the world.  Over time the single best return on your investment can be through the purchase of publicly traded stocks.  
 
 Some big reasons to invest in the stock market:
 
-1. historically, the stock market goes up (appreciates) over time;
-1. reinvestment of returns and compounding interest can help your money grow more quickly;
-1. mitigate potential risks by diversifying investments across multiple sectors;
-1. various forms of investment vehicles (ETFs/single stocks/mutual funds/etc.);
-1. generally, stock market returns beat inflation. <a href="#footnote1"><sup>[1]</sup></a>
+1. Historically, the stock market goes up (appreciates) over time;
+1. Reinvestment of returns and compounding interest can help your money grow more quickly;
+1. Mitigation of potential risks by diversifying investments across multiple sectors;
+1. Various forms of investment vehicles (ETFs/single stocks/mutual funds/etc.);
+1. Generally, stock market returns beat inflation. <a href="#footnote1"><sup>[1]</sup></a>
 
 If you are ready to maximize your stock knowledge then [PORTFOLIO EDGE](https://etorres-revature.github.io/Lucky_Mountaineers/) is the web app for you.
 
@@ -18,17 +18,17 @@ This is the home screen of the PORTFOLIO EDGE web app:
 
 ![PORTFOLIO EDGE web app home screen](./assets/screenshots/stock-app-home.png)
 
-Currently, users can choose to search either the New York Stock Exchange or the NASDAQ exchange.
+Currently, users can choose to search either the New York Stock Exchange (NYSE) or the NASDAQ exchange.
 
-In this example, a user is searching coca-cola on the NYSE:
+In this example, a user is searching Coca-Cola on the NYSE:
 
 ![PORTFOLIO EDGE NYSE](./assets/screenshots/stock-app-nyse.png)
 
 Upon hitting the search button a brief company description is presented as the "Company Profile", a chart with the past 12-month price information is presented, and current and historical price information for the stock as "Stock Information":
 
-1[PORTFOLIO EDGE NYSE search](./assets/screenshots/stock-app-nyse-search.png)
+![PORTFOLIO EDGE NYSE search](./assets/screenshots/stock-app-nyse-search.png)
 
-Similarly, users can search for stocks on the NASDAW exchange: 
+Similarly, users can search for stocks on the NASDAQ exchange: 
 
 ![PORTFOLIO EDGE NASDAQ](./assets/screenshots/stock-app-nasdaq.png)
 
@@ -42,7 +42,7 @@ Each search pulls the top fifteen latest news stories in the "Stock News" sectio
 
 Using the "Clear Search" button, users can remove all of the information from the most recently researched stock: 
 
-![PORTFOLIO EDGE clear search](./assets/screenshots/sotck-app-clear-search.png)
+![PORTFOLIO EDGE clear search](./assets/screenshots/stock-app-clear-search.png)
 
 And then, be ready to start all over again:
 
@@ -56,19 +56,35 @@ And then, be ready to start all over again:
 
 PORTFOLIO EDGE uses the Financial Modeling Prep [Ticker Search](https://financialmodelingprep.com/developer/docs/#Ticker-Search).  When the user inputs the company to search, PORTFOLIO EDGE then requests a ticker search from the API to return the appropriate stock ticker.  
 
-One limitation of this search is tht it is limited to exchange.  So, the user has to know if the stock being searched is traded on the NYSE or NASDAQ, and enter information into the appropriate input.
+One limitation of this search is that it is limited to one particular exchange.  So, the user has to know if the stock being searched is traded on the NYSE or NASDAQ and enter information into the appropriate input.
 
 Check out the [Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/) API documentation.
 
 ## Alpha Vantage
 
-Once PORTFOLIO EDGE has received the information about the company's ticker symbol, it then uses the Alpha Vantage API for Company Overview; Quote Endpoint; and the Monthly Time Series.
+Once PORTFOLIO EDGE has received the information about the company's ticker symbol, it then uses the Alpha Vantage API for *Company Overview; Quote Endpoint; and the Monthly Time Series*.
 
-Company overview is used to pull the following information: Company Description; Company Name; Market Sector; Exchange; Market Capitalization; BETA; 52 Week High/Low; Last Divident Amount/Date.
+**Company Overview** is used to pull the following information: 
 
-Quote Endpoint is used to pull the following information: Price; Change Value; Change Percent; Daily Low/High; Daily Volume; Last Trading Date.
+* Company Description; 
+* Company Name; 
+* Market Sector; 
+* Exchange; 
+* Market Capitalization; 
+* BETA; 
+* 52 Week High/Low; and
+* Last Divident Amount/Date.
 
-Montly Time Series returns monthly stock information from the previous 240 months (20 years).  This information is distilled into the previous 12 months information and entered into the chart that is displayed on screen.
+**Quote Endpoint** is used to pull the following information: 
+
+* Price;
+* Change Value; 
+* Change Percent; 
+* Daily Low/High; 
+* Daily Volume; and
+* Last Trading Date.
+
+**Montly Time Series** returns monthly stock information from the previous 240 months (20 years).  This information is distilled into the previous 12 months information and entered into the chart that is displayed on screen.
 
 Check out the [Alpha Vantage](https://www.alphavantage.co/documentation/) API documentation. 
 
@@ -118,10 +134,10 @@ Find out more about *Chart.js* at <a target="_blank" rel="noopener noreferrer">[
 
 Lucky Mountaineers
 
-* Emmanuel Durand
-* Toccara Hicks
-* Eric D. Torres
-* Telicia Watson
+* :cookie: Emmanuel Durand :cookie:
+* "gem: Toccara Hicks :gem:
+* :green_heart: Eric D. Torres :green_heart:
+* :rainbow: Telicia Watson :rainbow:
 
 Contact: etorresnotary@gmail.com. 
 
@@ -129,6 +145,6 @@ Contact: etorresnotary@gmail.com.
 
 GPL - 3.0
 
-<a name="footnote1">[5 Reasons to Invest in the Stock Market](https://money.usnews.com/investing/articles/2017-04-12/5-reasons-to-invest-in-the-stock-market)</a>
+<a name="footnote1">[footnote 1:  5 Reasons to Invest in the Stock Market](https://money.usnews.com/investing/articles/2017-04-12/5-reasons-to-invest-in-the-stock-market)</a>
 
 **WARNING:** *these statements are generalizations and should not be construed as actual financial advice.  Please consult a certified professional before investing in the stock market.*
