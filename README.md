@@ -145,6 +145,6 @@ Contact: etorresnotary@gmail.com.
 
 GNU General Public License - 3.0
 
-<a name="footnote1">[footnote 1:  5 Reasons to Invest in the Stock Market](https://money.usnews.com/investing/articles/2017-04-12/5-reasons-to-invest-in-the-stock-market)</a>
+<a name="Footnote1">[footnote 1:  5 Reasons to Invest in the Stock Market](https://money.usnews.com/investing/articles/2017-04-12/5-reasons-to-invest-in-the-stock-market)</a>
 
 **WARNING:** *these statements are generalizations and should not be construed as actual financial advice.  Please consult a certified professional before investing in the stock market.*

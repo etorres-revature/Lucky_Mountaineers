@@ -467,7 +467,7 @@ $("#nasdaq-ticker-searchBtn").on("click", function () {
   $("#nasdaq-ticker-input").val("");
   $("#nasdaq-ticker-input").attr(
     "placeholder",
-    "Enter company traded on NYSE..."
+    "Enter company traded on NASDAQ..."
   );
 });
 
