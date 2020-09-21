@@ -489,7 +489,7 @@ $("#clear-search-btn").on("click", () => {
 //setting ticker to the value input bgy the user
 // ticker = $("#stock-profile-input").val().trim();
 //splitting ticker at any spaces and joining back with an underscore because URL will not accept spaces
-// ticker - ticker.split(" ").join("_");
+// ticker = ticker.split(" ").join("_");
 //running function to get profile information of user selected company
 // getProfile(ticker);
 //running function to get current price information of user selected company
